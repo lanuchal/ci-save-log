@@ -1,0 +1,26 @@
+.select-none {
+  border-radius: 3rem;
+}
+/* kanit-regular - thai */
+body{
+    font-family: "Kanit";
+}
+
+@font-face {
+  font-family: "Kanit";
+  font-style: normal;
+  /* font-weight: 400; */
+  /* D:\xampp\htdocs\log\assets\fonts\kanit */
+  src: url("../fonts/kanit/kanit-v12-thai-regular.eot"); /* IE9 Compat Modes */
+  src: local(""),
+    url("../fonts/kanit/kanit-v12-thai-regular.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 url("../fonts/kanit/kanit-v12-thai-regular.woff2") */
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../fonts/kanit/kanit-v12-thai-regular.woff") format("woff"),
+    /* Modern Browsers */ url("../fonts/kanit/kanit-v12-thai-regular.ttf")
+      format("truetype"),
+    /* Safari, Android, iOS */
+      url("../fonts/kanit/kanit-v12-thai-regular.svg#Kanit") format("svg"); /* Legacy iOS */
+}
