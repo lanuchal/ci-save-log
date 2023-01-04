@@ -19,11 +19,11 @@ $(document).ready(function () {
             [10, 25, 50, -1],
             ['10 rows', '25 rows', '50 rows', 'Show all']
         ],
-        buttons: ['pageLength', 'colvis', {
+        buttons: ['pageLength', {
             extend: 'collection',
             text: 'export ',
             buttons: [
-                'csv', 'excel', 'pdf', 'print'
+                 'excel', 'print'
             ]
         }],
 

@@ -11,7 +11,78 @@ class Model_node extends CI_Model
     // use 000000000000
     public function get_node()
     {
-        $result = $this->db->get('serv_node');
+        $this->db->select('*');
+        $this->db->from('serv_node');
+        $this->db->where('deleted', '0');
+        $result = $this->db->get();
         return $result->result_array();
+    }
+
+
+    public function get_node_id($id)
+    {
+        $this->db->select('node_id,node_ip,node_name,node_detail,node_status');
+        $this->db->from('serv_node');
+        $this->db->where('node_id', $id);
+        $result = $this->db->get();
+        return $result->result_array();
+    }
+
+    public function update_node_id($id, $ip_changed, $name_changed, $detail_changed, $status_changed, $update_by)
+    {
+        $data = array(
+            'node_ip' => $ip_changed,
+            'node_name' => $name_changed,
+            'node_detail' => $detail_changed,
+            'node_status' => $status_changed,
+            'update_by' => $update_by,
+            'update_time' => date("Y-m-d h:i:s"),
+            'deleted' => 0
+        );
+
+        $this->db->where('node_id', $id);
+        $result = $this->db->update('serv_node', $data);
+        if ($result) {
+            return array("id" => $id, "node_ip" => $ip_changed, "node_name" => $name_changed, "node_detail" => $detail_changed, "node_status" => $status_changed, "update_time" => date("Y-m-d h:i:s"));
+        } else {
+            return false;
+        }
+    }
+
+    public function create_node($create_ip, $create_name, $create_detail, $create_status, $update_by)
+    {
+
+        $data = array(
+            'node_ip' => $create_ip,
+            'node_name' => $create_name,
+            'node_detail' => $create_detail,
+            'node_status' => $create_status,
+            'create_by' => $update_by,
+            'create_time' => date("Y-m-d h:i:s"),
+            'deleted' => 0
+        );
+
+        $result = $this->db->insert('serv_node', $data);
+
+        if ($result) {
+            return array("node_ip" => $create_ip, "node_name" => $create_name, "node_detail" => $create_detail, "node_status" => $create_status, "create_time" => date("Y-m-d h:i:s"));
+        } else {
+            return false;
+        }
+    }
+    public function delete_node($id, $update_by)
+    {
+        $data = array(
+            'update_by' => $update_by,
+            'update_time' => date("Y-m-d h:i:s"),
+            'deleted' => 1
+        );
+        $this->db->where('node_id', $id);
+        $result = $this->db->update('serv_node', $data);
+        if ($result) {
+            return array("id" => $id);
+        } else {
+            return false;
+        }
     }
 }

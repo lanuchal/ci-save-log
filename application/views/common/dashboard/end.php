@@ -30,7 +30,7 @@
 <!-- data table -->
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/dataTables.buttons.min.js"></script>
-<!-- <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/jszip.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/jszip.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/pdfmake.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/vfs_fonts.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/buttons.html5.min.js"></script>
@@ -43,7 +43,7 @@
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/responsive.bootstrap5.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/dataTables.select.min.js"></script>
 
-<!-- <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/buttons.print.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/buttons.print.min.js"></script>
 
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/buttons.js"></script>
 
