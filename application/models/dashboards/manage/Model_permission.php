@@ -1,17 +1,17 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Model_node extends CI_Model
+class Model_permission extends CI_Model
 {
 
     function __construct()
     {
         parent::__construct();
     }
-    // use 000000000000
+
     public function get_node()
     {
-        $this->db->select('node_id,node_ip,node_name,node_detail,node_status,create_time,update_time');
+        $this->db->select('*');
         $this->db->from('serv_node');
         $this->db->where('deleted', '0');
         $result = $this->db->get();

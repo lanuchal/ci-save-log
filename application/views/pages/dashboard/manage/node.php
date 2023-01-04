@@ -138,7 +138,7 @@
                                     <th style="width: 5%;">จัดการ</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="row_node">
                                 <?php foreach ($row_node as $key => $row) {
                                     $status_node = ($row['node_status'] == 1) ? "เปิดใช้งาน" : "ปิดใช้งาน";
                                     $label_color = ($row['node_status'] == 1) ? "bg-label-success" : "bg-label-secondary";
@@ -263,7 +263,8 @@
                 $('#node_ips' + id).text(response.node_ip);
                 $('#node_names' + id).text(response.node_name);
                 $('#node_details' + id).text(response.node_detail);
-                $('#update_times' + id).text(convertDate(response.update_time));
+                // $('#update_times' + id).text(convertDate(response.update_time));
+                $('#update_times' + id).text(response.update_time);
                 $('#node_statuss' + id).html(text_status);
             }
         });
@@ -292,8 +293,45 @@
             },
             dataType: 'json',
             success: (response) => {
+                console.log(response)
                 document.getElementById("cancel_create").click();
-                location.reload()
+
+                const status_node = (response.node_status == 1) ? "เปิดใช้งาน" : "ปิดใช้งาน";
+                const label_color = (response.node_status == 1) ? "bg-label-success" : "bg-label-secondary";
+
+                var new_row = ` <tr id='td_node${response.id}'>
+                                        <td>${response.lenght_row}</td>
+                                        <td id='node_ips${response.id}'>${response.node_ip}</td>
+                                        <td id='node_names${response.id}'>${response.node_name}</td>
+                                        <td id='node_details${response.id}'>${response.node_detail}</td>
+                                        <td id='node_statuss${response.id}'>
+                                            <span class="badge me-1 ${label_color}">
+                                            ${status_node}
+                                            </span>
+                                        </td>
+                                        <td id='update_times${response.id}'>${response.node_time}</td>
+                                        <td class="text-center">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <button class="dropdown-item" onclick="node_change(${response.id})" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                        <span class="badge bg-label-warning w-100">
+                                                            <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
+                                                        </span>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(${response.id})" data-bs-target="#modalToggle">
+                                                        <span class="badge bg-label-danger w-100">
+                                                            <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>`;
+
+                $('#row_node').append(new_row);
             }
         });
     }
@@ -379,7 +417,4 @@
 
         return [pad(d.getDate()), r_mount, d.getFullYear() + 543].join(' ')
     }
-    $(document).ready(function() {
-
-    });
 </script>
