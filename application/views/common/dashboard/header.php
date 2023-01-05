@@ -57,6 +57,9 @@ https://cdn.datatables.net/fixedheader/3.3.1/css/fixedHeader.bootstrap5.min.css2
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/demo.css" />
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom.css" />
 
+  <!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/libs/select2/bootstrap-select.css" /> -->
+
+  <!-- <link rel="stylesheet" href="../dist/css/bootstrap-select.css"> -->
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/libs/apex-charts/apex-charts.css" />

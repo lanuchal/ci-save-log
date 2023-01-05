@@ -27,6 +27,8 @@
 <!-- D:\xampp\htdocs\request-server\assets\js\datatable.js -->
 <!-- Place this tag in your head or just before your close body tag. -->
 
+
+
 <!-- data table -->
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/vendor/libs/datatable/js/dataTables.buttons.min.js"></script>

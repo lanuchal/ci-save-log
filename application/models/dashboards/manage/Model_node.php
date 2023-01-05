@@ -8,10 +8,10 @@ class Model_node extends CI_Model
     {
         parent::__construct();
     }
-    // use 000000000000
+    
     public function get_node()
     {
-        $this->db->select('*');
+        $this->db->select('node_id,node_ip,node_name,node_detail,node_status,create_time,update_time');
         $this->db->from('serv_node');
         $this->db->where('deleted', '0');
         $result = $this->db->get();
@@ -36,8 +36,7 @@ class Model_node extends CI_Model
             'node_detail' => $detail_changed,
             'node_status' => $status_changed,
             'update_by' => $update_by,
-            'update_time' => date("Y-m-d h:i:s"),
-            'deleted' => 0
+            'update_time' => date("Y-m-d h:i:s")
         );
 
         $this->db->where('node_id', $id);
@@ -63,9 +62,17 @@ class Model_node extends CI_Model
         );
 
         $result = $this->db->insert('serv_node', $data);
+        $insert_id = $this->db->insert_id();
+
+        $this->db->select('node_ip');
+        $this->db->from('serv_node');
+        $this->db->where('deleted', '0');
+        $result2 = $this->db->get();
+        $lenght_row = count($result2->result_array());
+
 
         if ($result) {
-            return array("node_ip" => $create_ip, "node_name" => $create_name, "node_detail" => $create_detail, "node_status" => $create_status, "create_time" => date("Y-m-d h:i:s"));
+            return array("lenght_row" => $lenght_row, "node_time" => date("Y-m-d h:i:s"), "id" => $insert_id, "node_ip" => $create_ip, "node_name" => $create_name, "node_detail" => $create_detail, "node_status" => $create_status, "create_time" => date("Y-m-d h:i:s"));
         } else {
             return false;
         }
