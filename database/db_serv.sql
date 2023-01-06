@@ -11,7 +11,7 @@
  Target Server Version : 100138 (10.1.38-MariaDB)
  File Encoding         : 65001
 
- Date: 05/01/2023 18:34:54
+ Date: 06/01/2023 16:25:34
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `serv_node`  (
   `update_time` datetime NULL DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`node_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ตารางข้อมูล server' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ตารางข้อมูล server' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of serv_node
@@ -43,12 +43,13 @@ INSERT INTO `serv_node` VALUES (2, '192.168.1.2', 'Database Main', 'server datab
 INSERT INTO `serv_node` VALUES (3, 'h', 'o', 'p', 1, '1', '2023-01-06 00:00:00', '65047', '2023-01-04 04:46:15', 1);
 INSERT INTO `serv_node` VALUES (4, '192.168.1.3', 'NAS', 'สำหรับเก็บข้อมูล ,backup database และ website หลักของศูนย์ฯ  ', 0, '65047', '2023-01-04 03:38:56', '65047', '2023-01-05 11:33:28', 0);
 INSERT INTO `serv_node` VALUES (5, '', '', '', 0, '65047', '2023-01-04 03:40:15', '65047', '2023-01-04 04:44:20', 1);
-INSERT INTO `serv_node` VALUES (6, '192.168.1.4', 'Backup website1', 'สำหรับ Backup website main แบบ daily', 1, '65047', '2023-01-04 03:44:18', '65047', '2023-01-05 11:14:51', 0);
+INSERT INTO `serv_node` VALUES (6, '192.168.1.4', 'Backup website1', 'สำหรับ Backup website main แบบ daily', 0, '65047', '2023-01-04 03:44:18', '65047', '2023-01-06 03:09:00', 0);
 INSERT INTO `serv_node` VALUES (7, 'bbbbb', 'ccccc', 'hhhh', 0, '65047', '2023-01-04 03:45:08', '65047', '2023-01-05 08:49:13', 1);
-INSERT INTO `serv_node` VALUES (8, '192.168.1.5', 'Backup website2', 'สำหรับ Backup website main แบบ daily', 1, '65047', '2023-01-04 04:48:44', '65047', '2023-01-05 11:15:30', 0);
-INSERT INTO `serv_node` VALUES (9, '192.168.1.6', 'Backup database1', 'สำหรับ Backup database main แบบ daily', 1, '65047', '2023-01-05 08:48:24', '65047', '2023-01-05 11:16:45', 0);
+INSERT INTO `serv_node` VALUES (8, '192.168.1.5', 'Backup website2', 'สำหรับ Backup website main แบบ daily', 0, '65047', '2023-01-04 04:48:44', '65047', '2023-01-06 03:09:03', 0);
+INSERT INTO `serv_node` VALUES (9, '192.168.1.6', 'Backup database1', 'สำหรับ Backup database main แบบ daily', 0, '65047', '2023-01-05 08:48:24', '65047', '2023-01-06 03:09:06', 0);
 INSERT INTO `serv_node` VALUES (10, 'asd', 'asd', 'asd', 0, '65047', '2023-01-05 08:49:01', '65047', '2023-01-05 08:49:08', 1);
-INSERT INTO `serv_node` VALUES (11, '192.168.1.7', 'Backup database2', 'สำหรับ Backup database main แบบ daily', 1, '65047', '2023-01-05 11:17:09', NULL, NULL, 0);
+INSERT INTO `serv_node` VALUES (11, '192.168.1.7', 'Backup database2', 'สำหรับ Backup database main แบบ daily', 0, '65047', '2023-01-05 11:17:09', '65047', '2023-01-06 03:09:12', 0);
+INSERT INTO `serv_node` VALUES (12, 'ฟหก', 'ฟหก', 'ฟหก', 0, '65047', '2023-01-06 02:16:24', '65047', '2023-01-06 02:16:27', 1);
 
 -- ----------------------------
 -- Table structure for serv_permission
@@ -66,7 +67,7 @@ CREATE TABLE `serv_permission`  (
   `update_time` datetime NULL DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`permission_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ตารางกำหนด permission ' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ตารางกำหนด permission ' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of serv_permission
@@ -98,10 +99,10 @@ CREATE TABLE `serv_request`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for serv_title_status
+-- Table structure for serv_title_req
 -- ----------------------------
-DROP TABLE IF EXISTS `serv_title_status`;
-CREATE TABLE `serv_title_status`  (
+DROP TABLE IF EXISTS `serv_title_req`;
+CREATE TABLE `serv_title_req`  (
   `req_title_id` int NOT NULL AUTO_INCREMENT,
   `req_title_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'ชื่อหัวข้อ เช่น อัปโหลดไฟล์ , แก้ไขโปรเจ็ค , เพิ่มฟิลล์ กฟะฟิฟหำ',
   `req_title_detail` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'รายละเอียดของหัวข้อ',
@@ -111,11 +112,17 @@ CREATE TABLE `serv_title_status`  (
   `update_time` datetime NULL DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`req_title_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of serv_title_status
+-- Records of serv_title_req
 -- ----------------------------
+INSERT INTO `serv_title_req` VALUES (1, 'เพิ่มระบบ', 'เพิ่มระบบใหม่บนเว็บไซต์ศูนย์', NULL, '2023-01-05 14:29:53', '65047', '2023-01-06 03:01:21', 0);
+INSERT INTO `serv_title_req` VALUES (4, 'แก้ไขระบบ', 'แก้ไขระบบเว็บไซต์บนเว็บไซต์', '65047', '2023-01-06 02:46:02', '65047', '2023-01-06 03:05:47', 0);
+INSERT INTO `serv_title_req` VALUES (5, 'เพิ่ม table ใน database', 'เพิ่ม table ที่ออกแบบใหม่ใน database ', '65047', '2023-01-06 02:56:04', '65047', '2023-01-06 03:06:52', 0);
+INSERT INTO `serv_title_req` VALUES (7, 'ลบ table ใน database ', 'ลบ table ที่ไม่ต้องการใน database ', '65047', '2023-01-06 03:07:18', '65047', '2023-01-06 03:07:57', 0);
+INSERT INTO `serv_title_req` VALUES (8, 'แก้ไข table ใน database ', 'แก้ table ที่ใน database ', '65047', '2023-01-06 03:07:49', NULL, NULL, 0);
+INSERT INTO `serv_title_req` VALUES (9, 'อื่นๆ', 'ระบุให้ชัดเจน ว่าเข้าใช้งานทำอะไร', '65047', '2023-01-06 03:10:59', NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for serv_use

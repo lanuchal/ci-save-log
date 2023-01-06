@@ -55,11 +55,7 @@
                                         </div>
                                     </div>
                                 </div>
-<<<<<<< HEAD
                                 <button type="button" onclick="permission_create()" class="btn btn-primary mt-4 mb-2 d-grid w-100">บันทึก</button>
-=======
-                                <button type="button" onclick="node_create()" class="btn btn-primary mt-4 mb-2 d-grid w-100">บันทึก</button>
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                                 <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas" id="cancel_create">
                                     ยกเลิก
                                 </button>
@@ -83,7 +79,6 @@
                                 <div class="row mb-5 p-2">
                                     <div class="text-center d-flex justify-content-center">
                                         <div style="width: 6rem; height: 6rem; color:#fff" class=" rounded-circle d-flex justify-content-center align-items-center bg-primary btn-icon">
-<<<<<<< HEAD
                                             <span class=" tf-icons bx bxs-lock-open bx-lg bx-lg"></span>
                                         </div>
                                     </div>
@@ -92,20 +87,6 @@
                                     <div class="col-12 mt-2">
                                         <label for="name_changed" class="form-label ps-2">ชื่อ</label>
                                         <input type="text" class="form-control" id="name_changed" placeholder="เช่น SP ADMIN,ADMIN,USER" aria-describedby="defaultFormControlHelp" required />
-=======
-                                            <span class=" tf-icons bx bxs-server bx-lg bx-lg"></span>
-                                        </div>
-                                    </div>
-                                    <h5 class="mb-5 mt-2 offcanvas-title text-center">แก้ไข SERVER CMEx</h5>
-                                    <input type="hidden" id="id_node">
-                                    <div class="col-12">
-                                        <label for="ip_changed" class="form-label ps-2">IP SERVER</label>
-                                        <input type="text" class="form-control" id="ip_changed" placeholder="เช่น 192.158.1.1" aria-describedby="defaultFormControlHelp" required />
-                                    </div>
-                                    <div class="col-12 mt-2">
-                                        <label for="name_changed" class="form-label ps-2">ชื่อ</label>
-                                        <input type="text" class="form-control" id="name_changed" placeholder="เช่น server database" aria-describedby="defaultFormControlHelp" required />
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                                     </div>
                                     <div class="col-12 mt-2">
 
@@ -127,11 +108,7 @@
                                         </div>
                                     </div>
                                 </div>
-<<<<<<< HEAD
                                 <button type="button" class="btn btn-primary mt-4 mb-2 d-grid w-100" onclick="permission_changed()">บันทึก</button>
-=======
-                                <button type="button" class="btn btn-primary mt-4 mb-2 d-grid w-100" onclick="node_changed()">บันทึก</button>
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                                 <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas" id="cancel_change">
                                     ยกเลิก
                                 </button>
@@ -140,24 +117,16 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
                 <!-- permission data -->
                 <div class="mt-2 col-12 col-md-12 col-lg-12 order-3 order-md-2">
                     <div class="table-responsive">
                         <table id="example" class="table border-top" style="width:100%">
-=======
-                <!-- node data -->
-                <div class="mt-2 col-12 col-md-12 col-lg-12 order-3 order-md-2">
-                    <div class="table-responsive">
-                        <table id="example" class="table border-top nowrap" style="width:100%">
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                             <thead>
                                 <tr>
                                     <th style="width: 5%;">ลำดับ</th>
                                     <th style="width: 20%;">ชื่อ</th>
                                     <th>รายละเอียด</th>
                                     <th style="width: 10%;">สถานะ</th>
-<<<<<<< HEAD
                                     <th style="width: 15%;">วันที่</th>
                                     <th style="width: 5%;">จัดการ</th>
                                 </tr>
@@ -177,47 +146,18 @@
                                             </span>
                                         </td>
                                         <td id='update_times<?php echo $row['permission_id'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
-=======
-                                    <th style="width: 13%;">วันที่</th>
-                                    <th style="width: 5%;">จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="row_node">
-                                <?php foreach ($row_permission as $key => $row) {
-                                    $status_node = ($row['node_status'] == 1) ? "เปิดใช้งาน" : "ปิดใช้งาน";
-                                    $label_color = ($row['node_status'] == 1) ? "bg-label-success" : "bg-label-secondary";
-                                ?>
-                                    <tr id='td_node<?php echo $row['node_id'] ?>'>
-                                        <td><?php echo $key + 1; ?></td>
-                                        <td id='node_names<?php echo $row['node_id'] ?>'><?php echo $row['node_name']; ?></td>
-                                        <td id='node_details<?php echo $row['node_id'] ?>'><?php echo $row['node_detail']; ?></td>
-                                        <td id='node_statuss<?php echo $row['node_id'] ?>'>
-                                            <span class="badge me-1 <?php echo $label_color; ?>">
-                                                <?php echo $status_node; ?>
-                                            </span>
-                                        </td>
-                                        <td id='update_times<?php echo $row['node_id'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                                         <td class="text-center">
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-<<<<<<< HEAD
                                                     <button class="dropdown-item" onclick="permission_change(<?php echo $row['permission_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-=======
-                                                    <button class="dropdown-item" onclick="node_change(<?php echo $row['node_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                                                         <span class="badge bg-label-warning w-100">
                                                             <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
                                                         </span>
                                                     </button>
-<<<<<<< HEAD
                                                     <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['permission_id']; ?>)" data-bs-target="#modalToggle">
-=======
-                                                    <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['node_id']; ?>)" data-bs-target="#modalToggle">
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                                                         <span class="badge bg-label-danger w-100">
                                                             <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
                                                         </span>
@@ -242,28 +182,15 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-<<<<<<< HEAD
                 <h5 class="modal-title" id="modalToggleLabel"><b>ลบสิทธิ์ในการใช้งาน</b> </h5>
-=======
-                <h5 class="modal-title" id="modalToggleLabel"><b>ลบ SERVER</b> </h5>
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal"></button>
             </div>
             <div class="modal-body p-0 m-0">
                 <div class="d-flex justify-content-center mt-3">
-<<<<<<< HEAD
                     <input type="hidden" id="permission_id_modal">
                     <p>ยืนยันที่จะลบ &nbsp;</p>
                     <b class="ms-4">PERMISSIONTION : </b>
                     <p class="text-primary mx-2" id="name_permission_title"> </p>
-=======
-                    <input type="hidden" id="node_id_modal">
-                    <p>ยืนยันที่จะลบ &nbsp;</p>
-                    <b>IP : </b>
-                    <p class="text-primary mx-2" id="name_server_ip"> </p>
-                    <b class="ms-4">SERVER : </b>
-                    <p class="text-primary mx-2" id="name_server_title"> </p>
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                     <p> ?</p>
                 </div>
             </div>
@@ -279,65 +206,36 @@
 <script>
     var uri = '<?php echo base_url(); ?>'
     // change node 
-<<<<<<< HEAD
     const permission_change = (id) => {
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/permission/get_permission_id',
-=======
-    const node_change = (id) => {
-        $.ajax({
-            type: 'POST',
-            url: uri + 'dashboards/manage/node/get_node_id',
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
             data: {
                 id: id
             },
             dataType: 'json',
             success: (response) => {
-<<<<<<< HEAD
                 var id_status = (response[0].permission_status == '1') ? '2' : '1';
                 $('#id_permission').val(id);
                 $('#name_changed').val(response[0].permission_name);
                 $('#detail_changed').val(response[0].permission_detail);
-=======
-                var id_status = (response[0].node_status == '1') ? '2' : '1';
-                $('#id_node').val(id);
-                $('#ip_changed').val(response[0].node_ip);
-                $('#name_changed').val(response[0].node_name);
-                $('#detail_changed').val(response[0].node_detail);
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                 $('#status_changed' + id_status).prop('checked', true);
             }
         });
     }
     // change node action
-<<<<<<< HEAD
     const permission_changed = () => {
 
         const id_permission = document.getElementById("id_permission").value;
-=======
-    const node_changed = () => {
-
-        const id_node = document.getElementById("id_node").value;
-        const ip_changed = document.getElementById("ip_changed").value;
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
         const name_changed = document.getElementById("name_changed").value;
         const detail_changed = document.getElementById("detail_changed").value;
         const status_changed = document.querySelector('input[name="status_changed"]:checked').value;
 
         $.ajax({
             type: 'POST',
-<<<<<<< HEAD
             url: uri + 'dashboards/manage/permission/update_permission_id',
             data: {
                 id: id_permission,
-=======
-            url: uri + 'dashboards/manage/node/update_node_id',
-            data: {
-                id: id_node,
-                ip_changed: ip_changed,
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                 name_changed: name_changed,
                 detail_changed: detail_changed,
                 status_changed: status_changed
@@ -346,7 +244,6 @@
             success: (response) => {
                 document.getElementById("cancel_change").click();
                 var id = response.id;
-<<<<<<< HEAD
                 var text_status = response.permission_status == 1 ?
                     "<span class='badge me-1 bg-label-success'>เปิดใช้งาน</span>" :
                     "<span class='badge me-1 bg-label-secondary'>ปิดใช้งาน</span>";
@@ -355,51 +252,24 @@
                 // $('#update_times' + id).text(convertDate(response.update_time));
                 $('#update_times' + id).text(response.update_time);
                 $('#permission_statuss' + id).html(text_status);
-=======
-                var text_status = response.node_status == 1 ?
-                    "<span class='badge me-1 bg-label-success'>เปิดใช้งาน</span>" :
-                    "<span class='badge me-1 bg-label-secondary'>ปิดใช้งาน</span>";
-                $('#node_ips' + id).text(response.node_ip);
-                $('#node_names' + id).text(response.node_name);
-                $('#node_details' + id).text(response.node_detail);
-                // $('#update_times' + id).text(convertDate(response.update_time));
-                $('#update_times' + id).text(response.update_time);
-                $('#node_statuss' + id).html(text_status);
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
             }
         });
     }
     // insert node
-<<<<<<< HEAD
     const permission_create = () => {
-=======
-    const node_create = () => {
-
-        const create_ip = document.getElementById("create_ip").value;
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
         const create_name = document.getElementById("create_name").value;
         const create_detail = document.getElementById("create_detail").value;
         const create_status = document.querySelector('input[name="create_status"]:checked').value;
 
-<<<<<<< HEAD
         if (!create_name || !create_detail || !create_status) {
-=======
-        if (!create_ip || !create_name || !create_detail || !create_status) {
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
             console.log("error !!");
             return;
         }
 
         $.ajax({
             type: 'POST',
-<<<<<<< HEAD
             url: uri + 'dashboards/manage/permission/create_permission',
             data: {
-=======
-            url: uri + 'dashboards/manage/node/create_node',
-            data: {
-                create_ip: create_ip,
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                 create_name: create_name,
                 create_detail: create_detail,
                 create_status: create_status
@@ -409,7 +279,6 @@
                 console.log(response)
                 document.getElementById("cancel_create").click();
 
-<<<<<<< HEAD
                 const status_permission = (response.permission_status == 1) ? "เปิดใช้งาน" : "ปิดใช้งาน";
                 const label_color = (response.permission_status == 1) ? "bg-label-success" : "bg-label-secondary";
 
@@ -423,33 +292,13 @@
                                             </span>
                                         </td>
                                         <td id='update_times${response.id}'>${response.permission_time}</td>
-=======
-                const status_node = (response.node_status == 1) ? "เปิดใช้งาน" : "ปิดใช้งาน";
-                const label_color = (response.node_status == 1) ? "bg-label-success" : "bg-label-secondary";
-
-                var new_row = ` <tr id='td_node${response.id}'>
-                                        <td>${response.lenght_row}</td>
-                                        <td id='node_ips${response.id}'>${response.node_ip}</td>
-                                        <td id='node_names${response.id}'>${response.node_name}</td>
-                                        <td id='node_details${response.id}'>${response.node_detail}</td>
-                                        <td id='node_statuss${response.id}'>
-                                            <span class="badge me-1 ${label_color}">
-                                            ${status_node}
-                                            </span>
-                                        </td>
-                                        <td id='update_times${response.id}'>${response.node_time}</td>
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                                         <td class="text-center">
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-<<<<<<< HEAD
                                                     <button class="dropdown-item" onclick="permission_change(${response.id})" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-=======
-                                                    <button class="dropdown-item" onclick="node_change(${response.id})" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
                                                         <span class="badge bg-label-warning w-100">
                                                             <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
                                                         </span>
@@ -464,11 +313,7 @@
                                         </td>
                                     </tr>`;
 
-<<<<<<< HEAD
                 $('#row_permission').append(new_row);
-=======
-                $('#row_node').append(new_row);
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
             }
         });
     }
@@ -476,43 +321,25 @@
     const sent_id = (id) => {
         $.ajax({
             type: 'POST',
-<<<<<<< HEAD
             url: uri + 'dashboards/manage/permission/get_permission_id',
-=======
-            url: uri + 'dashboards/manage/node/get_node_id',
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
             data: {
                 id: id
             },
             dataType: 'json',
             success: (response) => {
-<<<<<<< HEAD
                 $('#permission_id_modal').val(response[0].permission_id);
                 $('#name_permission_title').html(response[0].permission_name);
-=======
-                $('#node_id_modal').val(response[0].node_id);
-                $('#name_server_ip').html(response[0].node_ip);
-                $('#name_server_title').html(response[0].node_name);
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
             }
         });
     }
 
     // delete node 
     const node_delete = () => {
-<<<<<<< HEAD
         const id = document.getElementById("permission_id_modal").value;
         // console.log("node_delete (id) ", id)
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/permission/delete_permission',
-=======
-        const id = document.getElementById("node_id_modal").value;
-        console.log("node_delete (id) ", id)
-        $.ajax({
-            type: 'POST',
-            url: uri + 'dashboards/manage/node/delete_node',
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
             data: {
                 id: id
             },
@@ -520,11 +347,7 @@
             success: (response) => {
                 console.log(response)
                 document.getElementById("cancel_modal").click();
-<<<<<<< HEAD
                 document.getElementById("td_permission" + response.id).remove();
-=======
-                document.getElementById("td_node" + response.id).remove();
->>>>>>> fb472747948458b90ddb40fbbffe849de40583f4
             }
         });
     }

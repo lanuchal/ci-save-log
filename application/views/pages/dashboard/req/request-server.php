@@ -3,12 +3,13 @@
     <div class="col-12">
         <div class="card p-5">
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6 h3"><i class='bx-lg bx bxs-user-circle'></i> ผู้ใช้งาน </div>
+                <div class="col-12 col-md-6 col-lg-6 h3"><i class='bx-lg bx bxs-save'></i> 
+บันทึกเข้าใช้งาน SERVER </div>
                 <div class="col-12 col-md-6 col-lg-6 text-end">
                     <div class="mt-3">
                         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
                             <i class='bx bxs-plus-circle'></i>
-                            เพิ่มผู้ใช้งาน
+                            บันทึก
                         </button>
                         <!-- offcanvas create -->
                         <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
@@ -22,10 +23,10 @@
                                 <div class="row mb-5 p-2">
                                     <div class="text-center d-flex justify-content-center">
                                         <div style="width: 6rem; height: 6rem; color:#fff" class=" rounded-circle d-flex justify-content-center align-items-center bg-primary btn-icon">
-                                            <span class=" tf-icons bx bxs-user-circle bx-lg bx-lg"></span>
+                                            <span class=" tf-icons bx bxs-save bx-lg bx-lg"></span>
                                         </div>
                                     </div>
-                                    <h5 class="mb-5 mt-2 offcanvas-title text-center">เพิ่มผู้ใช้งาน</h5>
+                                    <h5 class="mb-5 mt-2 offcanvas-title text-center">บันทึก</h5>
                                     <div class="col-12 mt-2">
                                         <label for="defaultFormControlInput2" class="form-label ps-2">ชื่อ</label>
                                         <input class="form-control" list="browsers" name="browser" id="create_name">
