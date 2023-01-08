@@ -3,8 +3,8 @@
     <div class="col-12">
         <div class="card p-5">
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6 h3"><i class='bx-lg bx bxs-save'></i> 
-บันทึกเข้าใช้งาน SERVER </div>
+                <div class="col-12 col-md-6 col-lg-6 h3"><i class='bx-lg bx bxs-save'></i>
+                    บันทึกเข้าใช้งาน SERVER </div>
                 <div class="col-12 col-md-6 col-lg-6 text-end">
                     <div class="mt-3">
                         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
@@ -28,25 +28,40 @@
                                     </div>
                                     <h5 class="mb-5 mt-2 offcanvas-title text-center">บันทึก</h5>
                                     <div class="col-12 mt-2">
-                                        <label for="defaultFormControlInput2" class="form-label ps-2">ชื่อ</label>
-                                        <input class="form-control" list="browsers" name="browser" id="create_name">
-                                        <datalist id="browsers">
-                                            <?php foreach ($row_user as $key => $row) { ?>
-                                                <option value="<?php echo $row['NUM_OT'] . " - " . $row['Fname'] . " " . $row['Lname']; ?>">
+                                        <label for="create_node" class="form-label ps-2">server</label>
+                                        <input class="form-control" list="browsers0" id="create_node">
+                                        <datalist id="browsers0">
+                                            <?php foreach ($row_node as $key => $row) { ?>
+                                                <option value="<?php echo $row['node_id'] . " - " . $row['node_name']; ?>">
                                                 <?php } ?>
                                         </datalist>
                                     </div>
                                     <div class="col-12 mt-2">
-                                        <label for="defaultFormControlInput2" class="form-label ps-2">กำหนดสิทธิ์</label>
-                                        <input class="form-control" list="browsers2" name="browser2" id="create_permission">
-                                        <datalist id="browsers2">
-                                            <?php foreach ($row_permission as $key => $row) { ?>
-                                                <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
+                                        <label for="create_witness" class="form-label ps-2">พยาน</label>
+                                        <input class="form-control" list="browsers1" id="create_witness">
+                                        <datalist id="browsers1">
+                                            <?php foreach ($row_ma_user as $key => $row) { ?>
+                                                <option value="<?php echo $row['NUM_OT'] . " - " . $row['Fname'] . " " . $row['Lname']; ?>">
                                                 <?php } ?>
                                         </datalist>
                                     </div>
+
+                                    <div class="col-12 mt-2">
+                                        <label for="create_title" class="form-label ps-2">รายการ</label>
+                                        <input class="form-control" list="browsers2" id="create_title">
+                                        <datalist id="browsers2">
+                                            <?php foreach ($row_title as $key => $row) { ?>
+                                                <option value="<?php echo $row['req_title_id'] . " - " . $row['req_title_name']; ?>">
+                                                <?php } ?>
+                                        </datalist>
+                                    </div>
+
+                                    <div class="col-12 mt-2">
+                                        <label for="create_detail" class="form-label ps-2">รายละเอียด</label>
+                                        <textarea class="form-control" id="create_detail" rows="3"></textarea>
+                                    </div>
                                 </div>
-                                <button type="button" onclick="user_create()" class="btn btn-primary mt-4 mb-2 d-grid w-100">บันทึก</button>
+                                <button type="button" onclick="req_create()" class="btn btn-primary mt-4 mb-2 d-grid w-100">บันทึก</button>
                                 <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas" id="cancel_create">
                                     ยกเลิก
                                 </button>
@@ -70,23 +85,46 @@
                                 <div class="row mb-5 p-2">
                                     <div class="text-center d-flex justify-content-center">
                                         <div style="width: 6rem; height: 6rem; color:#fff" class=" rounded-circle d-flex justify-content-center align-items-center bg-primary btn-icon">
-                                            <span class=" tf-icons bx bxs-user-circle bx-lg bx-lg"></span>
+                                            <span class=" tf-icons bx bxs-save bx-lg bx-lg"></span>
                                         </div>
                                     </div>
-                                    <h5 class="mb-5 mt-2 offcanvas-title text-center">แก้ไขผู้ใช้งาน</h5>
-                                    <input type="hidden" id="change_id">
-
+                                    <h5 class="mb-5 mt-2 offcanvas-title text-center">แก้ไขบันทึก</h5>
                                     <div class="col-12 mt-2">
-                                        <label for="defaultFormControlInput2" class="form-label ps-2">กำหนดสิทธิ์</label>
-                                        <input class="form-control" list="browsers3" name="browser3" id="change_permission">
-                                        <datalist id="browsers3">
-                                            <?php foreach ($row_permission as $key => $row) { ?>
-                                                <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
+                                        <input type="hidden" id="id_changed">
+                                        <label for="change_node" class="form-label ps-2">server</label>
+                                        <input class="form-control" list="browsers0" id="change_node">
+                                        <datalist id="browsers0">
+                                            <?php foreach ($row_node as $key => $row) { ?>
+                                                <option value="<?php echo $row['node_id'] . " - " . $row['node_name']; ?>">
                                                 <?php } ?>
                                         </datalist>
                                     </div>
+                                    <div class="col-12 mt-2">
+                                        <label for="change_witness" class="form-label ps-2">พยาน</label>
+                                        <input class="form-control" list="browsers1" id="change_witness">
+                                        <datalist id="browsers1">
+                                            <?php foreach ($row_ma_user as $key => $row) { ?>
+                                                <option value="<?php echo $row['NUM_OT'] . " - " . $row['Fname'] . " " . $row['Lname']; ?>">
+                                                <?php } ?>
+                                        </datalist>
+                                    </div>
+
+                                    <div class="col-12 mt-2">
+                                        <label for="change_title" class="form-label ps-2">รายการ</label>
+                                        <input class="form-control" list="browsers2" id="change_title">
+                                        <datalist id="browsers2">
+                                            <?php foreach ($row_title as $key => $row) { ?>
+                                                <option value="<?php echo $row['req_title_id'] . " - " . $row['req_title_name']; ?>">
+                                                <?php } ?>
+                                        </datalist>
+                                    </div>
+
+                                    <div class="col-12 mt-2">
+                                        <label for="change_detail" class="form-label ps-2">รายละเอียด</label>
+                                        <textarea class="form-control" id="change_detail" rows="3"></textarea>
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btn-primary mt-4 mb-2 d-grid w-100" onclick="user_changed()">บันทึก</button>
+                                <button type="button" onclick="req_changed()" class="btn btn-primary mt-4 mb-2 d-grid w-100">บันทึก</button>
                                 <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas" id="cancel_change">
                                     ยกเลิก
                                 </button>
@@ -101,42 +139,112 @@
                         <table id="example" class="table border-top" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%;">ลำดับ</th>
-                                    <th style="width: 20%;">รหัส</th>
-                                    <th style="width: 30%;">ชื่อ</th>
-                                    <th>สิทธิ์</th>
-                                    <th style="width: 15%;">วันที่</th>
-                                    <th style="width: 5%;">จัดการ</th>
+                                    <th style="width: 2%;">ลำดับ</th>
+                                    <th style="width: 12%;">server</th>
+                                    <th style="width: 15%;">ผู้บันทึก</th>
+                                    <th>รายการและรายละเอียด</th>
+                                    <th style="width: 10%;">วันที่</th>
+                                    <th style="width: 15%;">พยาน</th>
+                                    <th style="width: 5%;">สถานะ</th>
+                                    <th style="width: 1%;"><i class="bx bx-edit-alt me-1"></th>
                                 </tr>
                             </thead>
                             <tbody id="row_user">
-                                <?php foreach ($row_ma_user as $key => $row) {
+                                <?php foreach ($row_req as $key => $row) {
+                                    $name_status = "";
+                                    $lable_color = "";
+                                    $user_access = $row['Fname'] . " " . $row['Lname'];
+                                    $d = ($row['update_time'] == null) ? $row['create_time'] : $row['update_time'];
+                                    $date_now = date("Y-m-d", strtotime($d));
+                                    if ($row['req_status'] == '0') {
+                                        $name_status = "รออนุมัติ";
+                                        $lable_color = "bg-label-warning";
+                                    } elseif ($row['req_status'] == '1') {
+                                        $name_status = "อนุมัติ";
+                                        $lable_color = "bg-label-success";
+                                    } else {
+                                        $name_status = "ยกเลิก";
+                                        $lable_color = "bg-label-danger";
+                                    }
                                 ?>
-                                    <tr id='td_user<?php echo $row['NUM_OT'] ?>'>
-                                        <td><?php echo $key + 1; ?></td>
-                                        <td id='user_id<?php echo $row['NUM_OT'] ?>'><?php echo $row['NUM_OT']; ?></td>
-                                        <td id='user_names<?php echo $row['NUM_OT'] ?>'><i class='bx bx-user'></i> &nbsp; <?php echo $row['Fname'] . " " . $row['Lname']; ?></td>
-                                        <td id='user_permissions<?php echo $row['NUM_OT'] ?>'><?php echo $row['permission_name']; ?></td>
+                                    <tr id='td_req<?php echo $row['req_id'] ?>'>
+                                        <td>
+                                            <?php echo $key + 1; ?>
+                                        </td>
+                                        <td id='req_node<?php echo $row['req_id'] ?>'>
+                                            <small>
+                                                <?php echo $row['node_name']; ?>
+                                            </small>
+                                        </td>
+                                        <td id='req_create<?php echo $row['req_id'] ?>' class="text-primary">
+                                            <small>
+                                                <?php echo $row['cre_Fname'] . " " . $row['cre_Lname']; ?>
+                                            </small>
+                                        </td>
+                                        <td id='req_title<?php echo $row['req_id'] ?>'>
+                                            <strong>
+                                                <small>
+                                                    <?php echo $row['req_title_name']; ?>
+                                                </small>
+                                            </strong>
+                                            :
+                                            <small class="text-break">
+                                                <?php echo $row['req_detial']; ?>
+                                            </small>
+                                        </td>
 
-                                        <td id='update_times<?php echo $row['NUM_OT'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <button class="dropdown-item" onclick="user_change(<?php echo $row['NUM_OT']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                        <span class="badge bg-label-warning w-100">
-                                                            <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
-                                                        </span>
+                                        <td id='update_times<?php echo $row['req_id'] ?>'>
+                                            <small>
+                                                <?php echo $date_now; ?>
+                                            </small>
+                                        </td>
+                                        <td id='req_witness<?php echo $row['req_id'] ?>'>
+                                            <small>
+                                                <?php echo $row['wit_Fname'] . " " . $row['wit_Lname']; ?>
+                                            </small>
+                                        </td>
+                                        <td id='req_status<?php echo $row['req_id'] ?>'>
+                                            <span class="badge me-1 <?php echo $lable_color; ?>" class="text-start" <?php if ($row['req_status'] == '1') { ?> data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="<?php echo $user_access; ?>" <?php } ?>>
+                                                <?php echo $name_status; ?>
+                                            </span>
+                                        </td>
+                                        <td class="text-center" id="manage_req<?php echo $row['req_id'] ?>">
+                                            <?php if ($row['req_status'] == '1') { ?>
+                                                <i class='bx bx-check'></i>
+                                            <?php } elseif ($row['req_status'] == '0') { ?>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
-                                                    <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['NUM_OT']; ?>)" data-bs-target="#modalToggle">
-                                                        <span class="badge bg-label-danger w-100">
-                                                            <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
-                                                        </span>
-                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id_access(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle_access">
+                                                            <span class="badge bg-label-success w-100">
+                                                                <i class="bx bx-check me-1"></i>&nbsp; อนุญาติบันทึก
+                                                            </span>
+                                                        </button>
+                                                        <button class="dropdown-item" onclick="req_change(<?php echo $row['req_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                            <span class="badge bg-label-warning w-100">
+                                                                <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขบันทึก
+                                                            </span>
+                                                        </button>
+                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id_cancel(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle_cancel">
+                                                            <span class="badge bg-label-danger w-100">
+                                                                <i class="bx bx-x me-1"></i>&nbsp; ยกเลิกบันทึก
+                                                            </span>
+                                                        </button>
+                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle">
+                                                            <span class="badge bg-label-danger w-100">
+                                                                <i class="bx bx-trash me-1"></i>&nbsp; ลบบันทึก
+                                                            </span>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            <?php } else { ?>
+
+                                                <i class='bx bx-x'></i>
+
+                                            <?php } ?>
+
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -151,22 +259,81 @@
 </div>
 
 <!-- Modal 1-->
+<div class="modal fade" id="modalToggle_access" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel"><b>อนุญาติ</b> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal_a"></button>
+            </div>
+            <div class="modal-body p-2 m-0">
+                <div class="d-flex justify-content-center mt-3">
+                    <input type="hidden" id="delete_id_a">
+                    <p>ยืนยันอนุญาติ &nbsp;</p>
+                    <b>รายการ : </b>
+                    <p class="text-primary mx-2" id="delete_name_a"> </p>
+                    <p> ?</p>
+                </div>
+                <div class="d-flex justify-content-center mb-2 text-primary">
+                    <small id="detail_a"></small>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: -1rem;">
+                <button class="btn btn-danger " onclick="user_access()">
+                    ยืนยัน
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 1-->
+<div class="modal fade" id="modalToggle_cancel" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel"><b>ยกลิก</b> </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal_c"></button>
+            </div>
+            <div class="modal-body p-2 m-0">
+                <div class="d-flex justify-content-center mt-3">
+                    <input type="hidden" id="delete_id_c">
+                    <p>ยืนยันที่จะยกเลิก &nbsp;</p>
+                    <b>รายการ : </b>
+                    <p class="text-primary mx-2" id="delete_name_c"> </p>
+                    <p> ?</p>
+                </div>
+                <div class="d-flex justify-content-center mb-2 text-primary">
+                    <small id="detail_c"></small>
+                </div>
+            </div>
+            <div class="modal-footer" style="margin-top: -1rem;">
+                <button class="btn btn-danger " onclick="user_cancel()">
+                    ยืนยัน
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 1-->
 <div class="modal fade" id="modalToggle" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalToggleLabel"><b>ลบผู้ใช้งาน</b> </h5>
+                <h5 class="modal-title" id="modalToggleLabel"><b>ลบ</b> </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal"></button>
             </div>
-            <div class="modal-body p-0 m-0">
+            <div class="modal-body p-2 m-0">
                 <div class="d-flex justify-content-center mt-3">
-                    <input type="hidden" id="delete_num_ot">
+                    <input type="hidden" id="delete_id">
                     <p>ยืนยันที่จะลบ &nbsp;</p>
-                    <b>ผู้ใช้งาน : </b>
+                    <b>รายการ : </b>
                     <p class="text-primary mx-2" id="delete_name"> </p>
-                    (
-                    <p class="text-primary mx-2" id="delete_permission"> </p>
-                    )<p> ?</p>
+                    <p> ?</p>
+                </div>
+                <div class="d-flex justify-content-center mb-2 text-primary">
+                    <small id="detail"></small>
                 </div>
             </div>
             <div class="modal-footer" style="margin-top: -1rem;">
@@ -180,110 +347,104 @@
 
 <script>
     var uri = '<?php echo base_url(); ?>'
-    const user_change = (id) => {
+    const req_change = (id) => {
+        // console.log(id);
+        // return;
         $.ajax({
             type: 'POST',
-            url: uri + 'dashboards/manage/ma_user/get_user_permission',
+            url: uri + 'dashboards/req/request_server/get_req_id',
             data: {
                 id: id
             },
             dataType: 'json',
             success: (response) => {
-                $('#change_id').val(id);
-                $('#change_permission').val(response[0].permission_id + " - " + response[0].permission_name);
+                $('#id_changed').val(id);
+                $('#change_node').val(response[0].node_id + " - " + response[0].node_name);
+                $('#change_witness').val(response[0].wit_id + " - " + response[0].wit_Fname + " " + response[0].wit_Lname);
+                $('#change_title').val(response[0].req_title_id + " - " + response[0].req_title_name);
+                $('#change_detail').val(response[0].req_detial);
+
             }
         });
     }
-    const user_changed = () => {
+    const req_changed = () => {
 
-        const change_permission = document.getElementById("change_permission").value;
-        const id_user = document.getElementById("change_id").value;
+        const change_node = document.getElementById("change_node").value;
+        const change_witness = document.getElementById("change_witness").value;
+        const change_title = document.getElementById("change_title").value;
 
-        const permission_id = change_permission.slice(0, change_permission.indexOf("-") - 1);
-        const permission_name = change_permission.slice(change_permission.indexOf("-") + 1, change_permission.lenght);
-
-
+        const id = document.getElementById("id_changed").value;
+        const change_detail = document.getElementById("change_detail").value;
+        const node_id = change_node.slice(0, change_node.indexOf("-") - 1);
+        const node_name = change_node.slice(change_node.indexOf("-") + 1, change_node.lenght);
+        const witness_id = change_witness.slice(0, change_witness.indexOf("-") - 1);
+        const witness_name = change_witness.slice(change_witness.indexOf("-") + 1, change_witness.lenght);
+        const title_id = change_title.slice(0, change_title.indexOf("-") - 1);
+        const title_name = change_title.slice(change_title.indexOf("-") + 1, change_title.lenght);
+        // return;
         $.ajax({
             type: 'POST',
-            url: uri + 'dashboards/manage/ma_user/update_user_permission',
+            url: uri + 'dashboards/req/request_server/update_req_id',
             data: {
-                id: id_user,
-                permission_id: permission_id,
-                permission_name: permission_name
+                id: id,
+                change_detail: change_detail,
+                node_id: node_id,
+                node_name: node_name,
+                witness_id: witness_id,
+                witness_name: witness_name,
+                title_id: title_id,
+                title_name: title_name
             },
             dataType: 'json',
             success: (response) => {
-                console.log(response)
+                // console.log(response)
+
+
+
                 document.getElementById("cancel_change").click();
-                var id = response.id;
-                $('#user_permissions' + id).text(response.permission_name);
-                $('#update_times' + id).text(response.update_time);
+                $('#req_node' + id).html(`<small>${node_name}</small>`);
+                $('#req_title' + id).html(`<strong><small>${title_name}</small></strong>:<small>${change_detail}</small>`);
+                $('#req_witness' + id).html(`<small>${witness_name}</small>`);
+                $('#update_times' + id).html(`<small>${response.update_time}</small>`);
             }
         });
     }
     // insert node
-    const user_create = () => {
+    const req_create = () => {
+        const create_witness = document.getElementById("create_witness").value;
+        const create_title = document.getElementById("create_title").value;
+        const create_detail = document.getElementById("create_detail").value;
+        const create_node = document.getElementById("create_node").value;
 
-        const create_name = document.getElementById("create_name").value;
-        const create_permission = document.getElementById("create_permission").value;
+        // create_node
+        const node_id = create_node.slice(0, create_node.indexOf("-") - 1);
+        const node_name = create_node.slice(create_node.indexOf("-") + 1, create_node.lenght);
+        const witness_id = create_witness.slice(0, create_witness.indexOf("-") - 1);
+        const witness_name = create_witness.slice(create_witness.indexOf("-") + 1, create_witness.lenght);
+        const title_id = create_title.slice(0, create_title.indexOf("-") - 1);
+        const title_name = create_title.slice(create_title.indexOf("-") + 1, create_title.lenght);
 
-        const permission_id = create_permission.slice(0, create_permission.indexOf("-") - 1);
-        const permission_name = create_permission.slice(create_permission.indexOf("-") + 1, create_permission.lenght);
-        const num_ot = create_name.slice(0, create_name.indexOf("-") - 1);
-        const user_name = create_name.slice(create_name.indexOf("-") + 1, create_name.lenght);
-
-        if (!create_name || !create_permission) {
+        if (!create_witness || !create_title || !create_detail || !create_node) {
             console.log("error !!");
             return;
         }
-        // console.log(create_ip)
 
-        console.log(num_ot)
-        console.log(user_name)
-        console.log(create_permission)
-        // return;
         $.ajax({
             type: 'POST',
-            url: uri + 'dashboards/manage/ma_user/create_ma_user',
+            url: uri + 'dashboards/req/request_server/create_req',
             data: {
-                num_ot: num_ot,
-                user_name: user_name,
-                permission_id: permission_id,
-                permission_name: permission_name
+                node_id: node_id,
+                node_name: node_name,
+                witness_id: witness_id,
+                witness_name: witness_name,
+                title_id: title_id,
+                title_name: title_name,
+                create_detail: create_detail
             },
             dataType: 'json',
             success: (response) => {
-                console.log(response)
                 document.getElementById("cancel_create").click();
-
-                var new_row = ` <tr id='td_user${response.num_ot}'>
-                                        <td>${response.lenght_row}</td>
-                                        <td id='user_ids${response.num_ot}'>${response.num_ot}</td>
-                                        <td id='user_names${response.num_ot}'><i class='bx bx-user'></i> &nbsp; ${response.name}</td>
-                                        <td id='user_permissions${response.num_ot}'> ${response.permission_name}</td>
-                                        <td id='update_times${response.num_ot}'>${response.user_time}</td>
-                                        <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <button class="dropdown-item" onclick="permission_change(${response.num_ot})" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                        <span class="badge bg-label-warning w-100">
-                                                            <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
-                                                        </span>
-                                                    </button>
-                                                    <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(${response.num_ot})" data-bs-target="#modalToggle">
-                                                        <span class="badge bg-label-danger w-100">
-                                                            <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
-                                                        </span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>`;
-
-                $('#row_user').append(new_row);
+                location.reload();
             }
         });
     }
@@ -292,26 +453,58 @@
         console.log("id", id)
         $.ajax({
             type: 'POST',
-            url: uri + 'dashboards/manage/ma_user/get_ma_user_id',
+            url: uri + 'dashboards/req/request_server/get_req_id',
             data: {
                 id: id
             },
             dataType: 'json',
             success: (response) => {
-                $('#delete_num_ot').val(response[0].NUM_OT);
-                $('#delete_permission').html(response[0].permission_name);
-                $('#delete_name').html(response[0].Fname + " " + response[0].Lname);
+                $('#delete_id').val(response[0].req_id);
+                $('#delete_name').html(response[0].req_title_name);
+                $('#detail').html(response[0].req_detial);
+            }
+        });
+    }
+    const sent_id_access = (id) => {
+        console.log("id", id)
+        $.ajax({
+            type: 'POST',
+            url: uri + 'dashboards/req/request_server/get_req_id',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: (response) => {
+                $('#delete_id_a').val(response[0].req_id);
+                $('#delete_name_a').html(response[0].req_title_name);
+                $('#detail_a').html(response[0].req_detial);
+            }
+        });
+    }
+    const sent_id_cancel = (id) => {
+        console.log("id", id)
+        $.ajax({
+            type: 'POST',
+            url: uri + 'dashboards/req/request_server/get_req_id',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: (response) => {
+                $('#delete_id_c').val(response[0].req_id);
+                $('#delete_name_c').html(response[0].req_title_name);
+                $('#detail_c').html(response[0].req_detial);
             }
         });
     }
 
     // delete node 
     const user_delete = () => {
-        const id = document.getElementById("delete_num_ot").value;
+        const id = document.getElementById("delete_id").value;
         // console.log("node_delete (id) ", id)
         $.ajax({
             type: 'POST',
-            url: uri + 'dashboards/manage/ma_user/delete_user',
+            url: uri + 'dashboards/req/request_server/delete_req',
             data: {
                 id: id
             },
@@ -319,10 +512,56 @@
             success: (response) => {
                 console.log(response)
                 document.getElementById("cancel_modal").click();
-                document.getElementById("td_user" + response.id).remove();
+                document.getElementById("td_req" + response.id).remove();
             }
         });
     }
+    // access node 
+    const user_access = () => {
+        const id = document.getElementById("delete_id_a").value;
+        // console.log("node_delete (id) ", id)
+        $.ajax({
+            type: 'POST',
+            url: uri + 'dashboards/req/request_server/access_req',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: (response) => {
+                document.getElementById("cancel_modal_a").click();
+                const name_access = response.user_access[0].Fname + " " + response.user_access[0].Lname;
+                console.log(name_access);
+                const lable_status = `<span class="badge me-1 bg-label-success" class="text-start" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="${name_access}">อนุญาติ</span>`;
+
+                $('#req_status' + id).html(lable_status);
+                $('#manage_req' + id).html(`<i class='bx bx-check'></i>`);
+            }
+        });
+    }
+
+    const user_cancel = () => {
+        const id = document.getElementById("delete_id_c").value;
+        // console.log("node_delete (id) ", id)
+        $.ajax({
+            type: 'POST',
+            url: uri + 'dashboards/req/request_server/access_cancel',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: (response) => {
+                document.getElementById("cancel_modal_c").click();
+                const name_access = response.user_access[0].Fname + " " + response.user_access[0].Lname;
+                console.log(name_access);
+                const lable_status = `<span class="badge me-1 bg-label-danger" class="text-start" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="${name_access}"><smail>อนุญาติ</smail></span>`;
+
+                $('#req_status' + id).html(lable_status);
+                $('#manage_req' + id).html(`<i class='bx bx-x'></i>`);
+            }
+        });
+    }
+
+
 
     function convertDate(inputFormat) {
         function pad(s) {

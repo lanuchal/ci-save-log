@@ -23,59 +23,89 @@ class Request_server extends MY_Controller
 	{
 		parent::__construct();
 		date_default_timezone_set('Asia/Bangkok');
-		$this->load->model('dashboards/manage/Model_ma_user', 'modelMaUser');
+		$this->load->model('dashboards/req/Model_request', 'modelRequest');
 		$this->load->model('dashboards/manage/Model_permission', 'modelPermission');
+
+		$this->load->model('dashboards/manage/Model_title', 'ModelTitle');
+		$this->load->model('dashboards/manage/Model_ma_user', 'modelMaUser');
+		$this->load->model('dashboards/manage/Model_node', 'modelNode');
 	}
 	public function index()
 	{
+		// $this->data['row_user'] = $this->modelRequest->get_user();
+		// $this->data['row_permission'] = $this->modelPermission->get_permission();
+
+		$this->data['row_title'] = $this->ModelTitle->get_title();
 		$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
-		$this->data['row_user'] = $this->modelMaUser->get_user();
-		$this->data['row_permission'] = $this->modelPermission->get_permission();
+		$this->data['row_node'] = $this->modelNode->get_node_req();
+		$this->data['row_req'] = $this->modelRequest->get_req();
+
 
 		$this->loadView(array('pages/dashboard/req/request-server'));
 	}
-	public function get_user_permission()
+	public function get_req_id()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$result = $this->modelMaUser->get_user_permission($id);
+		$result = $this->modelRequest->get_req_id($id);
 		echo json_encode($result);
 	}
 	public function get_ma_user_id()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$result = $this->modelMaUser->get_ma_user_id($id);
+		$result = $this->modelRequest->get_ma_user_id($id);
 		echo json_encode($result);
 	}
-	public function update_user_permission()
+	public function update_req_id()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$permission_id = $this->security->xss_clean($this->input->post('permission_id'));
-		$permission_name = $this->security->xss_clean($this->input->post('permission_name'));
+		$title_id = $this->security->xss_clean($this->input->post('title_id'));
+		$node_id = $this->security->xss_clean($this->input->post('node_id'));
+		$witness_id = $this->security->xss_clean($this->input->post('witness_id'));
+		$change_detail = $this->security->xss_clean($this->input->post('change_detail'));
 
 		$update_by = '65047';
 
-		$result = $this->modelMaUser->update_user_permission($id, $permission_id, $permission_name, $update_by);
+		$result = $this->modelRequest->update_req_id($id, $title_id, $node_id, $witness_id, $change_detail, $update_by);
 		echo json_encode($result);
 	}
-	public function create_ma_user()
+	public function create_req()
 	{
-		$num_ot = $this->security->xss_clean($this->input->post('num_ot'));
-		$user_name = $this->security->xss_clean($this->input->post('user_name'));
-		$permission_id = $this->security->xss_clean($this->input->post('permission_id'));
-		$permission_name = $this->security->xss_clean($this->input->post('permission_name'));
+		$node_id = $this->security->xss_clean($this->input->post('node_id'));
+		$node_name = $this->security->xss_clean($this->input->post('node_name'));
+		$witness_id = $this->security->xss_clean($this->input->post('witness_id'));
+		$witness_name = $this->security->xss_clean($this->input->post('witness_name'));
+		$title_id = $this->security->xss_clean($this->input->post('title_id'));
+		$title_name = $this->security->xss_clean($this->input->post('title_name'));
+		$create_detail = $this->security->xss_clean($this->input->post('create_detail'));
 
 		$update_by = '65047';
-
-		$result = $this->modelMaUser->create_ma_user($num_ot, $permission_id, $permission_name, $update_by, $user_name);
+		$result = $this->modelRequest->create_req($node_id, $node_name, $witness_id, $witness_name, $title_id, $title_name, $create_detail, $update_by);
 		echo json_encode($result);
 	}
-
-	public function delete_user()
+	
+	public function access_req()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
 		$update_by = '65047';
 
-		$result = $this->modelMaUser->delete_user($id, $update_by);
+		$result = $this->modelRequest->access_req($id, $update_by);
 		echo json_encode($result);
 	}
+	public function access_cancel()
+	{
+		$id = $this->security->xss_clean($this->input->post('id'));
+		$update_by = '65047';
+
+		$result = $this->modelRequest->access_cancel($id, $update_by);
+		echo json_encode($result);
+	}
+	public function delete_req()
+	{
+		$id = $this->security->xss_clean($this->input->post('id'));
+		$update_by = '65047';
+
+		$result = $this->modelRequest->delete_req($id, $update_by);
+		echo json_encode($result);
+	}
+
 }

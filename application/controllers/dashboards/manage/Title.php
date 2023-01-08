@@ -23,11 +23,11 @@ class Title extends MY_Controller
 	{
 		parent::__construct();
 		date_default_timezone_set('Asia/Bangkok');
-		$this->load->model('dashboards/manage/Model_title', 'MmodelTitle');
+		$this->load->model('dashboards/manage/Model_title', 'ModelTitle');
 	}
 	public function index()
 	{
-		$this->data['row_title'] = $this->MmodelTitle->get_title();
+		$this->data['row_title'] = $this->ModelTitle->get_title();
 
 		$this->loadView(array('pages/dashboard/manage/title'));
 	}
@@ -35,7 +35,7 @@ class Title extends MY_Controller
 	{
 
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$result = $this->MmodelTitle->get_title_id($id);
+		$result = $this->ModelTitle->get_title_id($id);
 		echo json_encode($result);
 	}
 
@@ -47,7 +47,7 @@ class Title extends MY_Controller
 
 		$update_by = '65047';
 
-		$result = $this->MmodelTitle->update_title_id($id, $name_changed, $detail_changed, $update_by);
+		$result = $this->ModelTitle->update_title_id($id, $name_changed, $detail_changed, $update_by);
 		echo json_encode($result);
 	}
 	public function create_title()
@@ -57,7 +57,7 @@ class Title extends MY_Controller
 
 		$update_by = '65047';
 
-		$result = $this->MmodelTitle->create_title($create_name, $create_detail, $update_by);
+		$result = $this->ModelTitle->create_title($create_name, $create_detail, $update_by);
 		echo json_encode($result);
 	}
 
@@ -66,7 +66,7 @@ class Title extends MY_Controller
 		$id = $this->security->xss_clean($this->input->post('id'));
 		$update_by = '65047';
 
-		$result = $this->MmodelTitle->delete_title($id, $update_by);
+		$result = $this->ModelTitle->delete_title($id, $update_by);
 		echo json_encode($result);
 	}
 }

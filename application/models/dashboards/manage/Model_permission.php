@@ -12,7 +12,7 @@ class Model_permission extends CI_Model
 
     public function get_permission()
     {
-        $this->db->select('permission_id,permission_name,permission_detail,permission_status,create_time,update_time');
+        $this->db->select('permission_id,permission_name,permission_detail,permission_set,permission_status,create_time,update_time');
         $this->db->from('serv_permission');
         $this->db->where('deleted', '0');
         $result = $this->db->get();

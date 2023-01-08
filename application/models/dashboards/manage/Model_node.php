@@ -17,6 +17,15 @@ class Model_node extends CI_Model
         $result = $this->db->get();
         return $result->result_array();
     }
+    public function get_node_req()
+    {
+        $this->db->select('node_id,node_ip,node_name,node_detail,node_status,create_time,update_time');
+        $this->db->from('serv_node');
+        $this->db->where('deleted', '0');
+        $this->db->where('node_status', '1');
+        $result = $this->db->get();
+        return $result->result_array();
+    }
 
 
     public function get_node_id($id)

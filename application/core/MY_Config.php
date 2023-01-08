@@ -16,7 +16,7 @@ class MY_Config extends CI_Config
             if (isset($_SERVER['HTTP_HOST'])) {
                 $base_url = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
             } else {
-                $base_url = 'http://localhost:8888/log';
+                $base_url = 'http://localhost/log';
             }
 
             $this->set_item('base_url', $base_url);
