@@ -66,3 +66,6 @@ $route['mamage_permission'] = 'dashboards/manage/permission';
 $route['mamage_ma_permission'] = 'dashboards/manage/ma_permission';
 $route['mamage_ma_user'] = 'dashboards/manage/ma_user';
 $route['mamage_title'] = 'dashboards/manage/title';
+
+// auth
+$route['auth_login'] = 'auth/auth';

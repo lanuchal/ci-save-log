@@ -35,13 +35,22 @@ class Request_server extends MY_Controller
 		// $this->data['row_user'] = $this->modelRequest->get_user();
 		// $this->data['row_permission'] = $this->modelPermission->get_permission();
 
-		$this->data['row_title'] = $this->ModelTitle->get_title();
-		$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
-		$this->data['row_node'] = $this->modelNode->get_node_req();
-		$this->data['row_req'] = $this->modelRequest->get_req();
 
 
-		$this->loadView(array('pages/dashboard/req/request-server'));
+
+
+		if (!$this->check_isvalidated()) {
+
+			$this->data['current_url'] = $this->uri->uri_string();
+
+			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+		} else {
+			$this->data['row_title'] = $this->ModelTitle->get_title();
+			$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
+			$this->data['row_node'] = $this->modelNode->get_node_req();
+			$this->data['row_req'] = $this->modelRequest->get_req();
+			$this->loadView(array('pages/dashboard/req/request-server'));
+		}
 	}
 	public function get_req_id()
 	{
@@ -82,7 +91,7 @@ class Request_server extends MY_Controller
 		$result = $this->modelRequest->create_req($node_id, $node_name, $witness_id, $witness_name, $title_id, $title_name, $create_detail, $update_by);
 		echo json_encode($result);
 	}
-	
+
 	public function access_req()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
@@ -107,5 +116,4 @@ class Request_server extends MY_Controller
 		$result = $this->modelRequest->delete_req($id, $update_by);
 		echo json_encode($result);
 	}
-
 }

@@ -1,0 +1,21 @@
+{
+    // "req_menu": "1",
+    // "req_create": "1",
+    // "req_change": "1",
+    // "req_access": "1",
+    // "req_cancel": "1",
+    // "req_delete": "1",
+    // "server_menu": "1",
+    // "server_create": "1",
+    // "server_change": "1",
+    // "server_delete": "1",
+    // "title_menu": "1",
+    // "title_create": "1",
+    // "title_change": "1",
+    // "title_delete": "1",
+    // "permission_menu": "1",
+    // "user_menu": "1",
+    "user_create": "1",
+    "user_change": "1",
+    "user_delete": "1"
+}

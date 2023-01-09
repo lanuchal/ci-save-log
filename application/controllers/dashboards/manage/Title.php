@@ -27,9 +27,17 @@ class Title extends MY_Controller
 	}
 	public function index()
 	{
-		$this->data['row_title'] = $this->ModelTitle->get_title();
 
-		$this->loadView(array('pages/dashboard/manage/title'));
+		if (!$this->check_isvalidated()) {
+
+			$this->data['current_url'] = $this->uri->uri_string();
+
+			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+		} else {
+			$this->data['row_title'] = $this->ModelTitle->get_title();
+
+			$this->loadView(array('pages/dashboard/manage/title'));
+		}
 	}
 	public function get_title_id()
 	{

@@ -7,6 +7,9 @@ class MY_Controller extends CI_Controller
     {
         parent::__construct();
         $this->data['nav_uri'] = $this->uri->uri_string();
+
+        $this->load->library('session');
+        $this->session->set_userdata('last_url', $this->uri->uri_string());
     }
 
     protected function loadView($body_views)
@@ -21,12 +24,24 @@ class MY_Controller extends CI_Controller
         $this->load->view('common/dashboard/footer');
         $this->load->view('common/dashboard/end');
     }
+
     protected function loadViewPageAuth($body_views)
     {
         $this->load->view('common/auth/header');
         foreach ($body_views as $body_view) {
-            $this->load->view($body_view);
+            $this->load->view($body_view, $this->data);
         }
         $this->load->view('common/auth/end');
+    }
+
+    protected function check_isvalidated()
+    {
+        $chk_login = $this->session->userdata('validated');
+
+        if ($chk_login) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

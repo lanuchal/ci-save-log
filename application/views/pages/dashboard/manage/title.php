@@ -1,3 +1,9 @@
+<?php
+$json_data = $this->session->userdata('permission_set');
+$object = json_decode($json_data, true);
+
+?>
+
 <div class="row">
     <!-- Bootstrap Table with Header - Light -->
     <div class="col-12">
@@ -10,10 +16,12 @@
 
                 <div class="col-12 col-md-6 col-lg-6 text-end">
                     <div class="mt-3">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
-                            <i class='bx bxs-plus-circle'></i>
-                            เพิ่มรานการ
-                        </button>
+                        <?php if ($object['title_create']) { ?>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
+                                <i class='bx bxs-plus-circle'></i>
+                                เพิ่มรานการ
+                            </button>
+                        <?php } ?>
                         <!-- offcanvas create -->
                         <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
                             <div class="offcanvas-header">
@@ -118,16 +126,19 @@
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <button class="dropdown-item" onclick="title_change(<?php echo $row['req_title_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                        <span class="badge bg-label-warning w-100">
-                                                            <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
-                                                        </span>
-                                                    </button>
-                                                    <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['req_title_id']; ?>)" data-bs-target="#modalToggle">
-                                                        <span class="badge bg-label-danger w-100">
-                                                            <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
-                                                        </span>
-                                                    </button>
+
+                                                    <?php if ($object['title_change']) { ?>
+                                                        <button class="dropdown-item" onclick="title_change(<?php echo $row['req_title_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                            <span class="badge bg-label-warning w-100">
+                                                                <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขรายการ
+                                                            </span>
+                                                        </button><?php } ?>
+                                                    <?php if ($object['title_delete']) { ?>
+                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['req_title_id']; ?>)" data-bs-target="#modalToggle">
+                                                            <span class="badge bg-label-danger w-100">
+                                                                <i class="bx bx-trash me-1"></i>&nbsp; ลบรายการ
+                                                            </span>
+                                                        </button><?php } ?>
                                                 </div>
                                             </div>
                                         </td>
@@ -142,6 +153,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Modal 1-->
 <div class="modal fade" id="modalToggle" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
@@ -219,7 +231,7 @@
         const create_name = document.getElementById("create_name").value;
         const create_detail = document.getElementById("create_detail").value;
 
-        if (!create_name || !create_detail ) {
+        if (!create_name || !create_detail) {
             console.log("error !!");
             return;
         }

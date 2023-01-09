@@ -21,6 +21,39 @@ class Dashboard extends MY_Controller
 	 */
 	public function index()
 	{
-		$this->loadView(array('pages/dashboard/dashboard'));
+
+
+		if (!$this->check_isvalidated()) {
+
+			$this->data['current_url'] = $this->uri->uri_string();
+
+			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+		} else {
+			$this->loadView(array('pages/dashboard/dashboard'));
+			$json_data = $this->session->userdata('permission_set');
+
+			$data = json_decode($json_data);
+
+
+			foreach ($data as $key => $value) {
+				$uri = "";
+				if (substr($key, 0, 3) == "req") {
+					$uri = "report";
+				} elseif (substr($key, 0, 3) == "ser") {
+					$uri = "mamage_node";
+				} elseif (substr($key, 0, 3) == "tit") {
+					$uri = "mamage_title";
+				} elseif (substr($key, 0, 3) == "per") {
+					$uri = "mamage_permission";
+				} elseif (substr($key, 0, 3) == "use") {
+					$uri = "mamage_ma_user";
+				}
+
+				if ($value == '1') {
+					header("Location: " . base_url($uri) . "");
+					return;
+				}
+			}
+		}
 	}
 }

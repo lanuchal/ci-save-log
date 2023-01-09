@@ -1,3 +1,8 @@
+<?php
+$json_data = $this->session->userdata('permission_set');
+$object = json_decode($json_data, true);
+
+?>
 <div class="row">
     <!-- Bootstrap Table with Header - Light -->
     <div class="col-12">
@@ -6,10 +11,12 @@
                 <div class="col-12 col-md-6 col-lg-6 h3"><i class='bx-lg bx bxs-user-circle'></i> ผู้ใช้งาน </div>
                 <div class="col-12 col-md-6 col-lg-6 text-end">
                     <div class="mt-3">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
-                            <i class='bx bxs-plus-circle'></i>
-                            เพิ่มผู้ใช้งาน
-                        </button>
+                        <?php if ($object['user_create']) { ?>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth" aria-controls="offcanvasBoth">
+                                <i class='bx bxs-plus-circle'></i>
+                                เพิ่มผู้ใช้งาน
+                            </button>
+                        <?php } ?>
                         <!-- offcanvas create -->
                         <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasBoth" aria-labelledby="offcanvasBothLabel">
                             <div class="offcanvas-header">
@@ -124,16 +131,18 @@
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <button class="dropdown-item" onclick="user_change(<?php echo $row['NUM_OT']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                        <span class="badge bg-label-warning w-100">
-                                                            <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
-                                                        </span>
-                                                    </button>
-                                                    <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['NUM_OT']; ?>)" data-bs-target="#modalToggle">
-                                                        <span class="badge bg-label-danger w-100">
-                                                            <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
-                                                        </span>
-                                                    </button>
+                                                    <?php if ($object['user_change']) { ?>
+                                                        <button class="dropdown-item" onclick="user_change(<?php echo $row['NUM_OT']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                            <span class="badge bg-label-warning w-100">
+                                                                <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขผู้ใช้งาน
+                                                            </span>
+                                                        </button><?php } ?>
+                                                    <?php if ($object['user_delete']) { ?>
+                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['NUM_OT']; ?>)" data-bs-target="#modalToggle">
+                                                            <span class="badge bg-label-danger w-100">
+                                                                <i class="bx bx-trash me-1"></i>&nbsp; ลบผู้ใช้งาน
+                                                            </span>
+                                                        </button><?php } ?>
                                                 </div>
                                             </div>
                                         </td>

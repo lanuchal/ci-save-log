@@ -28,11 +28,20 @@ class Ma_user extends MY_Controller
 	}
 	public function index()
 	{
-		$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
-		$this->data['row_user'] = $this->modelMaUser->get_user();
-		$this->data['row_permission'] = $this->modelPermission->get_permission();
 
-		$this->loadView(array('pages/dashboard/manage/ma-user'));
+
+		if (!$this->check_isvalidated()) {
+
+			$this->data['current_url'] = $this->uri->uri_string();
+
+			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+		} else {
+			$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
+			$this->data['row_user'] = $this->modelMaUser->get_user();
+			$this->data['row_permission'] = $this->modelPermission->get_permission();
+
+			$this->loadView(array('pages/dashboard/manage/ma-user'));
+		}
 	}
 	public function get_user_permission()
 	{

@@ -30,7 +30,7 @@
                                     <div class="col-6 mt-2">
                                         <small class="text-light fw-semibold">บันทึกเข้าใช้งาน</small>
                                         <div class="form-check mt-3">
-                                            <input class="form-check-input" type="checkbox" id="req_menu" />
+                                            <input class="form-check-input" type="checkbox" id="req_menu" onchange="handleChange_req(this)" />
                                             <label class="form-check-label" for="req_menu">
                                                 <strong>เมนู</strong>
                                             </label>
@@ -72,7 +72,7 @@
                                     <div class="col-6 mt-2">
                                         <small class="text-light fw-semibold">SERVER</small>
                                         <div class="form-check mt-3">
-                                            <input class="form-check-input" type="checkbox" value="" id="server_menu" />
+                                            <input class="form-check-input" type="checkbox" value="" id="server_menu" onchange="handleChange_server(this)" />
                                             <label class="form-check-label" for="server_menu">
                                                 <strong>เมนู</strong>
                                             </label>
@@ -102,7 +102,7 @@
                                     <div class="col-6 mt-2">
                                         <small class="text-light fw-semibold">รายการ</small>
                                         <div class="form-check mt-3">
-                                            <input class="form-check-input" type="checkbox" value="" id="title_menu" />
+                                            <input class="form-check-input" type="checkbox" value="" id="title_menu" onchange="handleChange_title(this)" />
                                             <label class="form-check-label" for="title_menu">
                                                 <strong>เมนู</strong>
                                             </label>
@@ -142,7 +142,7 @@
                                     <div class="col-6 mt-2">
                                         <small class="text-light fw-semibold">จัดการผู้ใช้งาน</small>
                                         <div class="form-check mt-3">
-                                            <input class="form-check-input" type="checkbox" value="" id="user_menu" />
+                                            <input class="form-check-input" type="checkbox" value="" id="user_menu" onchange="handleChange_user(this)" />
                                             <label class="form-check-label" for="user_menu">
                                                 <strong>เมนู</strong>
                                             </label>
@@ -199,9 +199,21 @@
                                 ?>
                                     <tr id='td_permission<?php echo $row['permission_id'] ?>'>
                                         <td><?php echo $key + 1; ?></td>
-                                        <td id='permission_names<?php echo $row['permission_id'] ?>'><?php echo $row['permission_name']; ?></td>
-                                        <td id='permission_details<?php echo $row['permission_id'] ?>'><?php echo $object['req_menu']; ?></td>
-                                        <td id='update_times<?php echo $row['permission_id'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
+                                        <td id='permission_names<?php echo $row['permission_id'] ?>'>
+                                            <?php echo $row['permission_name']; ?>
+                                        </td>
+                                        <td id='permission_details<?php echo $row['permission_id'] ?>' class="text-break">
+                                            <?php
+                                            foreach ($object as $key => $value) {
+                                                if ($value == '1') {
+                                                    echo "<span class='badge me-1 bg-label-primary'>" . $key . "</span>";
+                                                }
+                                            }
+                                            ?>
+                                        </td>
+                                        <td id='update_times<?php echo $row['permission_id'] ?>'>
+                                            <?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?>
+                                        </td>
                                         <td class="text-center">
                                             <button class="btn" onclick="permission_change(<?php echo $row['permission_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
                                                 <i class="bx bx-edit-alt me-1"></i>
@@ -246,29 +258,129 @@
 
 <script>
     var uri = '<?php echo base_url(); ?>'
+
+    // handleChange functions
+    function handleChange_req(checkbox) {
+        const check = checkbox.checked;
+        if (!check) {
+            $('#req_create').prop('checked', false);
+            $('#req_change').prop('checked', false);
+            $('#req_access').prop('checked', false);
+            $('#req_cancel').prop('checked', false);
+            $('#req_delete').prop('checked', false);
+
+            $('#req_create').prop('disabled', true);
+            $('#req_change').prop('disabled', true);
+            $('#req_access').prop('disabled', true);
+            $('#req_access').prop('disabled', true);
+            $('#req_cancel').prop('disabled', true);
+            $('#req_delete').prop('disabled', true);
+
+        } else {
+            $('#req_create').prop('disabled', false);
+            $('#req_change').prop('disabled', false);
+            $('#req_access').prop('disabled', false);
+            $('#req_access').prop('disabled', false);
+            $('#req_cancel').prop('disabled', false);
+            $('#req_delete').prop('disabled', false);
+
+        }
+    }
+
+    function handleChange_server(checkbox) {
+        const check = checkbox.checked;
+        if (!check) {
+            $('#server_create').prop('checked', false);
+            $('#server_change').prop('checked', false);
+            $('#server_delete').prop('checked', false);
+
+            $('#server_create').prop('disabled', true);
+            $('#server_change').prop('disabled', true);
+            $('#server_delete').prop('disabled', true);
+
+        } else {
+            $('#server_create').prop('disabled', false);
+            $('#server_change').prop('disabled', false);
+            $('#server_delete').prop('disabled', false);
+
+        }
+    }
+
+    function handleChange_title(checkbox) {
+        const check = checkbox.checked;
+        if (!check) {
+            $('#title_create').prop('checked', false);
+            $('#title_change').prop('checked', false);
+            $('#title_delete').prop('checked', false);
+
+            $('#title_create').prop('disabled', true);
+            $('#title_change').prop('disabled', true);
+            $('#title_delete').prop('disabled', true);
+
+        } else {
+            $('#title_create').prop('disabled', false);
+            $('#title_change').prop('disabled', false);
+            $('#title_delete').prop('disabled', false);
+
+        }
+    }
+
+    function handleChange_user(checkbox) {
+        const check = checkbox.checked;
+        if (!check) {
+            $('#user_create').prop('checked', false);
+            $('#user_change').prop('checked', false);
+            $('#user_delete').prop('checked', false);
+
+            $('#user_create').prop('disabled', true);
+            $('#user_change').prop('disabled', true);
+            $('#user_delete').prop('disabled', true);
+        } else {
+            $('#user_create').prop('disabled', false);
+            $('#user_change').prop('disabled', false);
+            $('#user_delete').prop('disabled', false);
+
+        }
+    }
+
     // change node 
     const permission_change = (id) => {
         $.ajax({
             type: 'POST',
-            url: uri + 'dashboards/manage/permission/get_permission_id',
+            url: uri + 'dashboards/manage/ma_permission/get_permission_set',
             data: {
                 id: id
             },
             dataType: 'json',
             success: (response) => {
-                var id_status = (response[0].permission_status == '1') ? '2' : '1';
+                var json_psermission_set = JSON.parse(response[0].permission_set);
                 $('#id_permission').val(id);
-                $('#name_changed').val(response[0].permission_name);
-                $('#permission_set').html(response[0].permission_name);
-                $('#detail_changed').val(response[0].permission_detail);
-                $('#status_changed' + id_status).prop('checked', true);
+                $('#req_menu').prop('checked', json_psermission_set.req_menu == '0' ? false : true);
+                $('#req_create').prop('checked', json_psermission_set.req_create == '0' ? false : true);
+                $('#req_change').prop('checked', json_psermission_set.req_change == '0' ? false : true);
+                $('#req_access').prop('checked', json_psermission_set.req_access == '0' ? false : true);
+                $('#req_cancel').prop('checked', json_psermission_set.req_cancel == '0' ? false : true);
+                $('#req_delete').prop('checked', json_psermission_set.req_delete == '0' ? false : true);
+                $('#server_menu').prop('checked', json_psermission_set.server_menu == '0' ? false : true);
+                $('#server_create').prop('checked', json_psermission_set.server_create == '0' ? false : true);
+                $('#server_change').prop('checked', json_psermission_set.server_change == '0' ? false : true);
+                $('#server_delete').prop('checked', json_psermission_set.server_delete == '0' ? false : true);
+                $('#title_menu').prop('checked', json_psermission_set.title_menu == '0' ? false : true);
+                $('#title_create').prop('checked', json_psermission_set.title_create == '0' ? false : true);
+                $('#title_change').prop('checked', json_psermission_set.title_change == '0' ? false : true);
+                $('#title_delete').prop('checked', json_psermission_set.title_delete == '0' ? false : true);
+                $('#permission_menu').prop('checked', json_psermission_set.permission_menu == '0' ? false : true);
+                $('#user_menu').prop('checked', json_psermission_set.user_menu == '0' ? false : true);
+                $('#user_create').prop('checked', json_psermission_set.user_create == '0' ? false : true);
+                $('#user_change').prop('checked', json_psermission_set.user_change == '0' ? false : true);
+                $('#user_delete').prop('checked', json_psermission_set.user_delete == '0' ? false : true);
             }
         });
     }
     // change node action
     const manage_changed = () => {
 
-        $id = '2';
+        const id = document.getElementById("id_permission").value;
         var req_menu = (document.getElementById("req_menu").checked) ? '1' : '0';
         var req_create = (document.getElementById("req_create").checked) ? '1' : '0';
         var req_change = (document.getElementById("req_change").checked) ? '1' : '0';
@@ -316,19 +428,30 @@
             user_delete: user_delete
         }
 
-        console.log(JSON.stringify(permission_set))
+        // console.log(JSON.stringify(permission_set))
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/ma_permission/change_permission_set',
             data: {
-                id: $id,
+                id: id,
                 data: JSON.stringify(permission_set)
             },
             dataType: 'json',
             success: (response) => {
-                console.log(response)
+                var json_psermission_set = JSON.parse(response[0].permission_set);
+                var label_psermission_set = "";
+                const keys = Object.keys(json_psermission_set);
+                const values = Object.values(json_psermission_set);
+                for (let i = 0; i < keys.length; i++) {
+                    if (values[i] == '1')
+                        label_psermission_set = label_psermission_set + `<span class='badge me-1 bg-label-primary'>${keys[i]}</span>`;
+                }
                 document.getElementById("cancel_change").click();
+                $('#permission_details' + id).html(label_psermission_set);
             }
         });
     }
+
+    // const checkbox = document.getElementById('req_menu').checked;
+    // console.log(checkbox);
 </script>

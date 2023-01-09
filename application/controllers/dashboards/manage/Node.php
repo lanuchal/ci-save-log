@@ -13,9 +13,18 @@ class Node extends MY_Controller
 
 	public function index()
 	{
-		$this->data['row_node'] = $this->modelNode->get_node();
 
-		$this->loadView(array('pages/dashboard/manage/node'));
+
+		if (!$this->check_isvalidated()) {
+
+			$this->data['current_url'] = $this->uri->uri_string();
+
+			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+		} else {
+			$this->data['row_node'] = $this->modelNode->get_node();
+
+			$this->loadView(array('pages/dashboard/manage/node'));
+		}
 	}
 
 	public function get_node_id()

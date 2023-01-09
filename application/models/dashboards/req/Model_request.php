@@ -18,6 +18,7 @@ class Model_request extends CI_Model
         wit.Lname AS wit_Lname, 
         serv_title_req.req_title_name, 
         serv_request.req_detial, 
+        serv_request.create_by, 
         serv_request.req_status, 
         serv_request.create_time, 
         serv_request.update_time, 
