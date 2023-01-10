@@ -1,7 +1,7 @@
 <!-- Menu -->
 
 <?php
-$json_data = $this->session->userdata('permission_set');
+$json_data = $this->session->userdata('req_permission_set');
 $object = json_decode($json_data, true);
 
 ?>
@@ -131,7 +131,7 @@ $object = json_decode($json_data, true);
         </li>
         <li class="menu-item <?php if ($nav_uri == "cards_basic")
                                     echo "active"; ?>">
-            <a href="<?php echo base_url('logout'); ?>" class="menu-link" data-bs-toggle="modal" data-bs-target="#modalToggle">
+            <a href="<?php echo base_url('logout'); ?>" class="menu-link" data-bs-toggle="modal" data-bs-target="#modalToggle_logout">
                 <i class="menu-icon tf-icons bx bx-log-out"></i>
                 <div data-i18n="Basic">ออกจากระบบ</div>
             </a>
@@ -142,7 +142,7 @@ $object = json_decode($json_data, true);
 
 
 <!-- Modal 1-->
-<div class="modal fade" id="modalToggle" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
+<div class="modal fade" id="modalToggle_logout" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
 
         <div class="modal-content">
@@ -156,7 +156,7 @@ $object = json_decode($json_data, true);
                     <p>ยืนยันที่จะออกจากระบบ &nbsp;</p>
                     <b>ผู้ใช้งาน </b>
                     :
-                    <p class="text-primary mx-2"><?php echo $this->session->userdata('Fname') . " " . $this->session->userdata('Lname'); ?> </p>
+                    <p class="text-primary mx-2"><?php echo $this->session->userdata('req_Fname') . " " . $this->session->userdata('req_Lname'); ?> </p>
                     <p> ?</p>
                 </div>
             </div>

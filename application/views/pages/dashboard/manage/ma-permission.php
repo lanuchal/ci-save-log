@@ -195,7 +195,7 @@
                                 <?php foreach ($row_permission as $key => $row) {
                                     $status_permission = ($row['permission_status'] == 1) ? "เปิดใช้งาน" : "ปิดใช้งาน";
                                     $label_color = ($row['permission_status'] == 1) ? "bg-label-success" : "bg-label-secondary";
-                                    $object = json_decode($row['permission_set'], true);
+
                                 ?>
                                     <tr id='td_permission<?php echo $row['permission_id'] ?>'>
                                         <td><?php echo $key + 1; ?></td>
@@ -203,10 +203,14 @@
                                             <?php echo $row['permission_name']; ?>
                                         </td>
                                         <td id='permission_details<?php echo $row['permission_id'] ?>' class="text-break">
+
                                             <?php
-                                            foreach ($object as $key => $value) {
-                                                if ($value == '1') {
-                                                    echo "<span class='badge me-1 bg-label-primary'>" . $key . "</span>";
+                                            if ($row['permission_set'] != null) {
+                                                $object = json_decode($row['permission_set'], true);
+                                                foreach ($object as $key => $value) {
+                                                    if ($value == '1') {
+                                                        echo "<span class='badge me-1 bg-label-primary'>" . $key . "</span>";
+                                                    }
                                                 }
                                             }
                                             ?>
@@ -215,9 +219,15 @@
                                             <?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?>
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn" onclick="permission_change(<?php echo $row['permission_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                <i class="bx bx-edit-alt me-1"></i>
-                                            </button>
+
+                                            <?php if ($row['permission_id'] == '1') { ?>
+                                                <i class='bx bx-check'></i>
+                                            <?php  } else { ?>
+
+                                                <button class="btn" onclick="permission_change(<?php echo $row['permission_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                    <i class="bx bx-edit-alt me-1"></i>
+                                                </button>
+                                            <?php  }  ?>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -345,6 +355,7 @@
 
     // change node 
     const permission_change = (id) => {
+
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/ma_permission/get_permission_set',
@@ -429,6 +440,7 @@
         }
 
         // console.log(JSON.stringify(permission_set))
+
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/ma_permission/change_permission_set',

@@ -1,6 +1,6 @@
 <?php
-$json_data = $this->session->userdata('permission_set');
-$num_ot = $this->session->userdata('NUM_OT');
+$json_data = $this->session->userdata('req_permission_set');
+$num_ot = $this->session->userdata('req_NUM_OT');
 $object = json_decode($json_data, true);
 
 ?>
@@ -49,9 +49,12 @@ $object = json_decode($json_data, true);
                                         <label for="create_witness" class="form-label ps-2">พยาน</label>
                                         <input class="form-control" list="browsers1" id="create_witness">
                                         <datalist id="browsers1">
-                                            <?php foreach ($row_ma_user as $key => $row) { ?>
-                                                <option value="<?php echo $row['NUM_OT'] . " - " . $row['Fname'] . " " . $row['Lname']; ?>">
-                                                <?php } ?>
+                                            <?php foreach ($row_ma_user as $key => $row) {
+                                                if ($row['NUM_OT'] != $num_ot) {
+                                            ?>
+                                                    <option value="<?php echo $row['NUM_OT'] . " - " . $row['Fname'] . " " . $row['Lname']; ?>">
+                                                <?php }
+                                            } ?>
                                         </datalist>
                                     </div>
 
@@ -112,9 +115,12 @@ $object = json_decode($json_data, true);
                                         <label for="change_witness" class="form-label ps-2">พยาน</label>
                                         <input class="form-control" list="browsers1" id="change_witness">
                                         <datalist id="browsers1">
-                                            <?php foreach ($row_ma_user as $key => $row) { ?>
-                                                <option value="<?php echo $row['NUM_OT'] . " - " . $row['Fname'] . " " . $row['Lname']; ?>">
-                                                <?php } ?>
+                                            <?php foreach ($row_ma_user as $key => $row) {
+
+                                                if ($row['NUM_OT'] != $num_ot) { ?>
+                                                    <option value="<?php echo $row['NUM_OT'] . " - " . $row['Fname'] . " " . $row['Lname']; ?>">
+                                                <?php }
+                                            } ?>
                                         </datalist>
                                     </div>
 
@@ -221,41 +227,49 @@ $object = json_decode($json_data, true);
                                             <?php if ($row['req_status'] == '1') { ?>
                                                 <i class='bx bx-check'></i>
                                             <?php } elseif ($row['req_status'] == '0') { ?>
-                                                <div class="dropdown">
-                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
+                                                <?php if (!($object['req_access'] && $num_ot != $row['create_by']) && !($object['req_change']  && $num_ot == $row['create_by']) && !$object['req_cancel'] && !($object['req_delete'] && $num_ot == $row['create_by'])) { ?>
+                                                    <i class="bx bx-x me-1"></i>
+                                                <?php } else { ?>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
 
-                                                        <?php if ($object['req_access'] && $num_ot != $row['create_by']) { ?>
-                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id_access(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle_access">
-                                                                <span class="badge bg-label-success w-100">
-                                                                    <i class="bx bx-check me-1"></i>&nbsp; อนุญาติบันทึก
-                                                                </span>
-                                                            </button><?php } ?>
-                                                        <?php if ($object['req_change']) { ?>
+                                                            <?php if ($object['req_access'] && $num_ot != $row['create_by']) { ?>
+                                                                <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id_access(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle_access">
+                                                                    <span class="badge bg-label-success w-100">
+                                                                        <i class="bx bx-check me-1"></i>&nbsp; อนุญาติบันทึก
+                                                                    </span>
+                                                                </button>
+                                                            <?php } ?>
+                                                            <?php if ($object['req_change']  && $num_ot == $row['create_by']) { ?>
 
-                                                            <button class="dropdown-item" onclick="req_change(<?php echo $row['req_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                                <span class="badge bg-label-warning w-100">
-                                                                    <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขบันทึก
-                                                                </span>
-                                                            </button><?php } ?>
-                                                        <?php if ($object['req_cancel']) { ?>
+                                                                <button class="dropdown-item" onclick="req_change(<?php echo $row['req_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                                    <span class="badge bg-label-warning w-100">
+                                                                        <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขบันทึก
+                                                                    </span>
+                                                                </button>
+                                                            <?php } ?>
+                                                            <?php if ($object['req_cancel']) { ?>
 
-                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id_cancel(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle_cancel">
-                                                                <span class="badge bg-label-danger w-100">
-                                                                    <i class="bx bx-x me-1"></i>&nbsp; ยกเลิกบันทึก
-                                                                </span>
-                                                            </button><?php } ?>
-                                                        <?php if ($object['req_delete']) { ?>
+                                                                <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id_cancel(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle_cancel">
+                                                                    <span class="badge bg-label-danger w-100">
+                                                                        <i class="bx bx-x me-1"></i>&nbsp; ยกเลิกบันทึก
+                                                                    </span>
+                                                                </button>
+                                                            <?php } ?>
+                                                            <?php if ($object['req_delete'] && $num_ot == $row['create_by']) { ?>
 
-                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle">
-                                                                <span class="badge bg-label-danger w-100">
-                                                                    <i class="bx bx-trash me-1"></i>&nbsp; ลบบันทึก
-                                                                </span>
-                                                            </button>
-                                                    </div><?php } ?>
-                                                </div>
+                                                                <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle">
+                                                                    <span class="badge bg-label-danger w-100">
+                                                                        <i class="bx bx-trash me-1"></i>&nbsp; ลบบันทึก
+                                                                    </span>
+                                                                </button>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
                                             <?php } else { ?>
 
                                                 <i class='bx bx-x'></i>
@@ -339,7 +353,7 @@ $object = json_decode($json_data, true);
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalToggleLabel"><b>ลบ</b> </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal_d"></button>
             </div>
             <div class="modal-body p-2 m-0">
                 <div class="d-flex justify-content-center mt-3">
@@ -528,7 +542,7 @@ $object = json_decode($json_data, true);
             dataType: 'json',
             success: (response) => {
                 console.log(response)
-                document.getElementById("cancel_modal").click();
+                document.getElementById("cancel_modal_d").click();
                 document.getElementById("td_req" + response.id).remove();
             }
         });
@@ -569,8 +583,8 @@ $object = json_decode($json_data, true);
             success: (response) => {
                 document.getElementById("cancel_modal_c").click();
                 const name_access = response.user_access[0].Fname + " " + response.user_access[0].Lname;
-                console.log(name_access);
-                const lable_status = `<span class="badge me-1 bg-label-danger" class="text-start" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="${name_access}"><smail>อนุญาติ</smail></span>`;
+                // console.log(response);
+                const lable_status = `<span class="badge me-1 bg-label-danger" class="text-start" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="${name_access}"><smail>ยกเลิก</smail></span>`;
 
                 $('#req_status' + id).html(lable_status);
                 $('#manage_req' + id).html(`<i class='bx bx-x'></i>`);

@@ -28,7 +28,7 @@ class Auth extends MY_Controller
 
     public function index()
     {
-        if (!$this->check_isvalidated()) {
+        if (!$this->check_isreq_validated()) {
             $this->data['current_url'] = $this->uri->uri_string();
             $this->loadViewPageAuth(array('pages/auth/auth-login'));
         } else {

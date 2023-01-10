@@ -31,7 +31,7 @@ class Report extends MY_Controller
 
 
 
-		if (!$this->check_isvalidated()) {
+		if (!$this->check_isreq_validated()) {
 
 			$this->data['current_url'] = $this->uri->uri_string();
 
@@ -62,9 +62,8 @@ class Report extends MY_Controller
 		$permission_id = $this->security->xss_clean($this->input->post('permission_id'));
 		$permission_name = $this->security->xss_clean($this->input->post('permission_name'));
 
-		$update_by = '65047';
 
-		$result = $this->modelMaUser->update_user_permission($id, $permission_id, $permission_name, $update_by);
+		$result = $this->modelMaUser->update_user_permission($id, $permission_id, $permission_name);
 		echo json_encode($result);
 	}
 	public function create_ma_user()
@@ -74,18 +73,14 @@ class Report extends MY_Controller
 		$permission_id = $this->security->xss_clean($this->input->post('permission_id'));
 		$permission_name = $this->security->xss_clean($this->input->post('permission_name'));
 
-		$update_by = '65047';
-
-		$result = $this->modelMaUser->create_ma_user($num_ot, $permission_id, $permission_name, $update_by, $user_name);
+		$result = $this->modelMaUser->create_ma_user($num_ot, $permission_id, $permission_name, $user_name);
 		echo json_encode($result);
 	}
 
 	public function delete_user()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$update_by = '65047';
-
-		$result = $this->modelMaUser->delete_user($id, $update_by);
+		$result = $this->modelMaUser->delete_user($id);
 		echo json_encode($result);
 	}
 }

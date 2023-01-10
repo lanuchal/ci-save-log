@@ -147,23 +147,27 @@
                                         </td>
                                         <td id='update_times<?php echo $row['permission_id'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
                                         <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <button class="dropdown-item" onclick="permission_change(<?php echo $row['permission_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                        <span class="badge bg-label-warning w-100">
-                                                            <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
-                                                        </span>
+                                            <?php if ($row['permission_id'] == '1') { ?>
+                                                <i class='bx bx-check'></i>
+                                            <?php  } else { ?>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
-                                                    <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['permission_id']; ?>)" data-bs-target="#modalToggle">
-                                                        <span class="badge bg-label-danger w-100">
-                                                            <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
-                                                        </span>
-                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button class="dropdown-item" onclick="permission_change(<?php echo $row['permission_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                            <span class="badge bg-label-warning w-100">
+                                                                <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
+                                                            </span>
+                                                        </button>
+                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['permission_id']; ?>)" data-bs-target="#modalToggle">
+                                                            <span class="badge bg-label-danger w-100">
+                                                                <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
+                                                            </span>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            <?php  } ?>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -183,7 +187,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalToggleLabel"><b>ลบสิทธิ์ในการใช้งาน</b> </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_permission"></button>
             </div>
             <div class="modal-body p-0 m-0">
                 <div class="d-flex justify-content-center mt-3">
@@ -195,7 +199,7 @@
                 </div>
             </div>
             <div class="modal-footer" style="margin-top: -1rem;">
-                <button class="btn btn-danger " onclick="node_delete()">
+                <button class="btn btn-danger " onclick="permission_delete()">
                     ยืนยัน
                 </button>
             </div>
@@ -266,13 +270,38 @@
             return;
         }
 
+
+        const permission_set = {
+            req_menu: 0,
+            req_create: 0,
+            req_change: 0,
+            req_access: 0,
+            req_cancel: 0,
+            req_delete: 0,
+            server_menu: 0,
+            server_create: 0,
+            server_change: 0,
+            server_delete: 0,
+            title_menu: 0,
+            title_create: 0,
+            title_change: 0,
+            title_delete: 0,
+            permission_menu: 0,
+            user_menu: 0,
+            user_create: 0,
+            user_change: 0,
+            user_delete: 0
+        }
+
+
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/permission/create_permission',
             data: {
                 create_name: create_name,
                 create_detail: create_detail,
-                create_status: create_status
+                create_status: create_status,
+                data: JSON.stringify(permission_set)
             },
             dataType: 'json',
             success: (response) => {
@@ -334,7 +363,7 @@
     }
 
     // delete node 
-    const node_delete = () => {
+    const permission_delete = () => {
         const id = document.getElementById("permission_id_modal").value;
         // console.log("node_delete (id) ", id)
         $.ajax({
@@ -346,7 +375,7 @@
             dataType: 'json',
             success: (response) => {
                 console.log(response)
-                document.getElementById("cancel_modal").click();
+                document.getElementById("cancel_permission").click();
                 document.getElementById("td_permission" + response.id).remove();
             }
         });

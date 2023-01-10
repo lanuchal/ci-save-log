@@ -30,7 +30,7 @@ class Permission extends MY_Controller
 
 
 
-		if (!$this->check_isvalidated()) {
+		if (!$this->check_isreq_validated()) {
 
 			$this->data['current_url'] = $this->uri->uri_string();
 
@@ -55,9 +55,8 @@ class Permission extends MY_Controller
 		$detail_changed = $this->security->xss_clean($this->input->post('detail_changed'));
 		$status_changed = $this->security->xss_clean($this->input->post('status_changed'));
 
-		$update_by = '65047';
 
-		$result = $this->modelPermission->update_permission_id($id, $name_changed, $detail_changed, $status_changed, $update_by);
+		$result = $this->modelPermission->update_permission_id($id, $name_changed, $detail_changed, $status_changed);
 		echo json_encode($result);
 	}
 	public function create_permission()
@@ -65,19 +64,18 @@ class Permission extends MY_Controller
 		$create_name = $this->security->xss_clean($this->input->post('create_name'));
 		$create_detail = $this->security->xss_clean($this->input->post('create_detail'));
 		$create_status = $this->security->xss_clean($this->input->post('create_status'));
+		$data = $this->security->xss_clean($this->input->post('data'));
 
-		$update_by = '65047';
 
-		$result = $this->modelPermission->create_permission($create_name, $create_detail, $create_status, $update_by);
+		$result = $this->modelPermission->create_permission($create_name, $create_detail, $create_status, $data);
 		echo json_encode($result);
 	}
 
 	public function delete_permission()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$update_by = '65047';
 
-		$result = $this->modelPermission->delete_permission($id, $update_by);
+		$result = $this->modelPermission->delete_permission($id);
 		echo json_encode($result);
 	}
 }

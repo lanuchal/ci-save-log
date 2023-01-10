@@ -28,7 +28,7 @@ class Title extends MY_Controller
 	public function index()
 	{
 
-		if (!$this->check_isvalidated()) {
+		if (!$this->check_isreq_validated()) {
 
 			$this->data['current_url'] = $this->uri->uri_string();
 
@@ -53,9 +53,8 @@ class Title extends MY_Controller
 		$name_changed = $this->security->xss_clean($this->input->post('name_changed'));
 		$detail_changed = $this->security->xss_clean($this->input->post('detail_changed'));
 
-		$update_by = '65047';
 
-		$result = $this->ModelTitle->update_title_id($id, $name_changed, $detail_changed, $update_by);
+		$result = $this->ModelTitle->update_title_id($id, $name_changed, $detail_changed);
 		echo json_encode($result);
 	}
 	public function create_title()
@@ -63,18 +62,16 @@ class Title extends MY_Controller
 		$create_name = $this->security->xss_clean($this->input->post('create_name'));
 		$create_detail = $this->security->xss_clean($this->input->post('create_detail'));
 
-		$update_by = '65047';
 
-		$result = $this->ModelTitle->create_title($create_name, $create_detail, $update_by);
+		$result = $this->ModelTitle->create_title($create_name, $create_detail);
 		echo json_encode($result);
 	}
 
 	public function delete_title()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$update_by = '65047';
 
-		$result = $this->ModelTitle->delete_title($id, $update_by);
+		$result = $this->ModelTitle->delete_title($id);
 		echo json_encode($result);
 	}
 }

@@ -29,12 +29,12 @@ class Model_title extends CI_Model
         return $result->result_array();
     }
 
-    public function update_title_id($id, $name_changed, $detail_changed, $update_by)
+    public function update_title_id($id, $name_changed, $detail_changed)
     {
         $data = array(
             'req_title_name' => $name_changed,
             'req_title_detail' => $detail_changed,
-            'update_by' => $update_by,
+            'update_by' => $this->session->userdata('req_NUM_OT'),
             'update_time' => date("Y-m-d h:i:s")
         );
 
@@ -47,13 +47,13 @@ class Model_title extends CI_Model
         }
     }
 
-    public function create_title($create_name, $create_detail, $update_by)
+    public function create_title($create_name, $create_detail)
     {
 
         $data = array(
             'req_title_name' => $create_name,
             'req_title_detail' => $create_detail,
-            'create_by' => $update_by,
+            'create_by' => $this->session->userdata('req_NUM_OT'),
             'create_time' => date("Y-m-d h:i:s"),
             'deleted' => 0
         );
@@ -73,12 +73,10 @@ class Model_title extends CI_Model
             return false;
         }
     }
-    public function delete_title
-    
-    ($id, $update_by)
+    public function delete_title($id)
     {
         $data = array(
-            'update_by' => $update_by,
+            'update_by' => $this->session->userdata('req_NUM_OT'),
             'update_time' => date("Y-m-d h:i:s"),
             'deleted' => 1
         );

@@ -19,6 +19,16 @@ class Model_permission extends CI_Model
         return $result->result_array();
     }
 
+    public function get_permission_status_on()
+    {
+        $this->db->select('permission_id,permission_name,permission_detail,permission_set,permission_status,create_time,update_time');
+        $this->db->from('serv_permission');
+        $this->db->where('deleted', '0');
+        $this->db->where('permission_status', '1');
+        $result = $this->db->get();
+        return $result->result_array();
+    }
+
 
     public function get_permission_id($id)
     {
@@ -29,13 +39,13 @@ class Model_permission extends CI_Model
         return $result->result_array();
     }
 
-    public function update_permission_id($id, $name_changed, $detail_changed, $status_changed, $update_by)
+    public function update_permission_id($id, $name_changed, $detail_changed, $status_changed)
     {
         $data = array(
             'permission_name' => $name_changed,
             'permission_detail' => $detail_changed,
             'permission_status' => $status_changed,
-            'update_by' => $update_by,
+            'update_by' => $this->session->userdata('req_NUM_OT'),
             'update_time' => date("Y-m-d h:i:s")
         );
 
@@ -48,14 +58,15 @@ class Model_permission extends CI_Model
         }
     }
 
-    public function create_permission($create_name, $create_detail, $create_status, $update_by)
+    public function create_permission($create_name, $create_detail, $create_status, $data)
     {
 
         $data = array(
+            'permission_set' => $data,
             'permission_name' => $create_name,
             'permission_detail' => $create_detail,
             'permission_status' => $create_status,
-            'create_by' => $update_by,
+            'create_by' => $this->session->userdata('req_NUM_OT'),
             'create_time' => date("Y-m-d h:i:s"),
             'deleted' => 0
         );
@@ -76,10 +87,10 @@ class Model_permission extends CI_Model
             return false;
         }
     }
-    public function delete_permission($id, $update_by)
+    public function delete_permission($id)
     {
         $data = array(
-            'update_by' => $update_by,
+            'update_by' => $this->session->userdata('req_NUM_OT'),
             'update_time' => date("Y-m-d h:i:s"),
             'deleted' => 1
         );

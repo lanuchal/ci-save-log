@@ -37,14 +37,14 @@ class Model_node extends CI_Model
         return $result->result_array();
     }
 
-    public function update_node_id($id, $ip_changed, $name_changed, $detail_changed, $status_changed, $update_by)
+    public function update_node_id($id, $ip_changed, $name_changed, $detail_changed, $status_changed)
     {
         $data = array(
             'node_ip' => $ip_changed,
             'node_name' => $name_changed,
             'node_detail' => $detail_changed,
             'node_status' => $status_changed,
-            'update_by' => $update_by,
+            'update_by' => $this->session->userdata('req_NUM_OT'),
             'update_time' => date("Y-m-d h:i:s")
         );
 
@@ -57,7 +57,7 @@ class Model_node extends CI_Model
         }
     }
 
-    public function create_node($create_ip, $create_name, $create_detail, $create_status, $update_by)
+    public function create_node($create_ip, $create_name, $create_detail, $create_status)
     {
 
         $data = array(
@@ -65,7 +65,7 @@ class Model_node extends CI_Model
             'node_name' => $create_name,
             'node_detail' => $create_detail,
             'node_status' => $create_status,
-            'create_by' => $update_by,
+            'create_by' => $this->session->userdata('req_NUM_OT'),
             'create_time' => date("Y-m-d h:i:s"),
             'deleted' => 0
         );
@@ -86,10 +86,10 @@ class Model_node extends CI_Model
             return false;
         }
     }
-    public function delete_node($id, $update_by)
+    public function delete_node($id)
     {
         $data = array(
-            'update_by' => $update_by,
+            'update_by' => $this->session->userdata('req_NUM_OT'),
             'update_time' => date("Y-m-d h:i:s"),
             'deleted' => 1
         );

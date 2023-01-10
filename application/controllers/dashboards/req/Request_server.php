@@ -25,24 +25,15 @@ class Request_server extends MY_Controller
 		date_default_timezone_set('Asia/Bangkok');
 		$this->load->model('dashboards/req/Model_request', 'modelRequest');
 		$this->load->model('dashboards/manage/Model_permission', 'modelPermission');
-
 		$this->load->model('dashboards/manage/Model_title', 'ModelTitle');
 		$this->load->model('dashboards/manage/Model_ma_user', 'modelMaUser');
 		$this->load->model('dashboards/manage/Model_node', 'modelNode');
 	}
 	public function index()
 	{
-		// $this->data['row_user'] = $this->modelRequest->get_user();
-		// $this->data['row_permission'] = $this->modelPermission->get_permission();
-
-
-
-
-
-		if (!$this->check_isvalidated()) {
+		if (!$this->check_isreq_validated()) {
 
 			$this->data['current_url'] = $this->uri->uri_string();
-
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
 			$this->data['row_title'] = $this->ModelTitle->get_title();
@@ -72,9 +63,8 @@ class Request_server extends MY_Controller
 		$witness_id = $this->security->xss_clean($this->input->post('witness_id'));
 		$change_detail = $this->security->xss_clean($this->input->post('change_detail'));
 
-		$update_by = '65047';
 
-		$result = $this->modelRequest->update_req_id($id, $title_id, $node_id, $witness_id, $change_detail, $update_by);
+		$result = $this->modelRequest->update_req_id($id, $title_id, $node_id, $witness_id, $change_detail);
 		echo json_encode($result);
 	}
 	public function create_req()
@@ -87,33 +77,29 @@ class Request_server extends MY_Controller
 		$title_name = $this->security->xss_clean($this->input->post('title_name'));
 		$create_detail = $this->security->xss_clean($this->input->post('create_detail'));
 
-		$update_by = '65047';
-		$result = $this->modelRequest->create_req($node_id, $node_name, $witness_id, $witness_name, $title_id, $title_name, $create_detail, $update_by);
+		$result = $this->modelRequest->create_req($node_id, $node_name, $witness_id, $witness_name, $title_id, $title_name, $create_detail);
 		echo json_encode($result);
 	}
 
 	public function access_req()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$update_by = '65047';
 
-		$result = $this->modelRequest->access_req($id, $update_by);
+		$result = $this->modelRequest->access_req($id);
 		echo json_encode($result);
 	}
 	public function access_cancel()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$update_by = '65047';
 
-		$result = $this->modelRequest->access_cancel($id, $update_by);
+		$result = $this->modelRequest->access_cancel($id);
 		echo json_encode($result);
 	}
 	public function delete_req()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$update_by = '65047';
 
-		$result = $this->modelRequest->delete_req($id, $update_by);
+		$result = $this->modelRequest->delete_req($id,);
 		echo json_encode($result);
 	}
 }

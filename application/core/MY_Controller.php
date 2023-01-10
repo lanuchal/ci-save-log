@@ -34,9 +34,9 @@ class MY_Controller extends CI_Controller
         $this->load->view('common/auth/end');
     }
 
-    protected function check_isvalidated()
+    protected function check_isreq_validated()
     {
-        $chk_login = $this->session->userdata('validated');
+        $chk_login = $this->session->userdata('req_validated');
 
         if ($chk_login) {
             return 1;

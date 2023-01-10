@@ -1,5 +1,5 @@
 <?php
-$json_data = $this->session->userdata('permission_set');
+$json_data = $this->session->userdata('req_permission_set');
 $object = json_decode($json_data, true);
 
 ?>
@@ -162,27 +162,32 @@ $object = json_decode($json_data, true);
                                         </td>
                                         <td id='update_times<?php echo $row['node_id'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
                                         <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
+                                            <?php if (!$object['server_change'] && !$object['server_delete']) { ?>
+                                                <i class="bx bx-x me-1"></i>
+                                            <?php } else { ?>
 
-                                                    <?php if ($object['server_change']) { ?>
-                                                        <button class="dropdown-item" onclick="node_change(<?php echo $row['node_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                            <span class="badge bg-label-warning w-100">
-                                                                <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขข้อมูล SERVER
-                                                            </span>
-                                                        </button><?php } ?>
-                                                    <?php if ($object['server_delete']) { ?>
-                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['node_id']; ?>)" data-bs-target="#modalToggle">
-                                                            <span class="badge bg-label-danger w-100">
-                                                                <i class="bx bx-trash me-1"></i>&nbsp; ลบข้อมูล SERVER
-                                                            </span>
-                                                        </button>
-                                                    <?php } ?>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+
+                                                        <?php if ($object['server_change']) { ?>
+                                                            <button class="dropdown-item" onclick="node_change(<?php echo $row['node_id']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                                <span class="badge bg-label-warning w-100">
+                                                                    <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขข้อมูล SERVER
+                                                                </span>
+                                                            </button><?php } ?>
+                                                        <?php if ($object['server_delete']) { ?>
+                                                            <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['node_id']; ?>)" data-bs-target="#modalToggle">
+                                                                <span class="badge bg-label-danger w-100">
+                                                                    <i class="bx bx-trash me-1"></i>&nbsp; ลบข้อมูล SERVER
+                                                                </span>
+                                                            </button>
+                                                        <?php } ?>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            <?php } ?>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -202,7 +207,7 @@ $object = json_decode($json_data, true);
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalToggleLabel"><b>ลบ SERVER</b> </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_node"></button>
             </div>
             <div class="modal-body p-0 m-0">
                 <div class="d-flex justify-content-center mt-3">
@@ -376,7 +381,7 @@ $object = json_decode($json_data, true);
             dataType: 'json',
             success: (response) => {
                 console.log(response)
-                document.getElementById("cancel_modal").click();
+                document.getElementById("cancel_node").click();
                 document.getElementById("td_node" + response.id).remove();
             }
         });

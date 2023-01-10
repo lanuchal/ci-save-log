@@ -23,17 +23,16 @@ class Dashboard extends MY_Controller
 	{
 
 
-		if (!$this->check_isvalidated()) {
+		if (!$this->check_isreq_validated()) {
 
 			$this->data['current_url'] = $this->uri->uri_string();
 
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
 			$this->loadView(array('pages/dashboard/dashboard'));
-			$json_data = $this->session->userdata('permission_set');
+			$json_data = $this->session->userdata('req_permission_set');
 
 			$data = json_decode($json_data);
-
 
 			foreach ($data as $key => $value) {
 				$uri = "";

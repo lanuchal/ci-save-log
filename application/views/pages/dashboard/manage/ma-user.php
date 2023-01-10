@@ -1,5 +1,5 @@
 <?php
-$json_data = $this->session->userdata('permission_set');
+$json_data = $this->session->userdata('req_permission_set');
 $object = json_decode($json_data, true);
 
 ?>
@@ -35,7 +35,7 @@ $object = json_decode($json_data, true);
                                     <h5 class="mb-5 mt-2 offcanvas-title text-center">เพิ่มผู้ใช้งาน</h5>
                                     <div class="col-12 mt-2">
                                         <label for="defaultFormControlInput2" class="form-label ps-2">ชื่อ</label>
-                                        <input class="form-control" list="browsers" name="browser" id="create_name">
+                                        <input class="form-control" list="browsers" name="browser" id="create_name" placeholder="กรุณากรอกรหัสและชื่อพนักงาน">
                                         <datalist id="browsers">
                                             <?php foreach ($row_user as $key => $row) { ?>
                                                 <option value="<?php echo $row['NUM_OT'] . " - " . $row['Fname'] . " " . $row['Lname']; ?>">
@@ -44,13 +44,24 @@ $object = json_decode($json_data, true);
                                     </div>
                                     <div class="col-12 mt-2">
                                         <label for="defaultFormControlInput2" class="form-label ps-2">กำหนดสิทธิ์</label>
-                                        <input class="form-control" list="browsers2" name="browser2" id="create_permission">
+                                        <input class="form-control" list="browsers2" name="browser2" id="create_permission" placeholder="กำหนดสิทธิ์">
                                         <datalist id="browsers2">
                                             <?php foreach ($row_permission as $key => $row) { ?>
                                                 <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
                                                 <?php } ?>
                                         </datalist>
+
+                                        <!-- <select class="form-select" id="create_permission" aria-label="Default select example">
+                                            <?php foreach ($row_permission as $key => $row) { ?>
+                                                <option value="<?php echo $row['permission_id']; ?>"><?php echo  $row['permission_name']; ?></option>
+                                            <?php } ?>
+
+                                        </select> -->
+
+
                                     </div>
+
+
                                 </div>
                                 <button type="button" onclick="user_create()" class="btn btn-primary mt-4 mb-2 d-grid w-100">บันทึก</button>
                                 <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas" id="cancel_create">
@@ -90,6 +101,14 @@ $object = json_decode($json_data, true);
                                                 <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
                                                 <?php } ?>
                                         </datalist>
+
+                                        <!-- 
+                                        <select class="form-select" id="change_permission" aria-label="Default select example">
+                                            <?php foreach ($row_permission as $key => $row) { ?>
+                                                <option value="<?php echo $row['permission_id']; ?>"><?php echo  $row['permission_name']; ?></option>
+                                            <?php } ?>
+                                        </select> -->
+
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-primary mt-4 mb-2 d-grid w-100" onclick="user_changed()">บันทึก</button>
@@ -126,25 +145,37 @@ $object = json_decode($json_data, true);
 
                                         <td id='update_times<?php echo $row['NUM_OT'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
                                         <td class="text-center">
-                                            <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <?php if ($object['user_change']) { ?>
-                                                        <button class="dropdown-item" onclick="user_change(<?php echo $row['NUM_OT']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
-                                                            <span class="badge bg-label-warning w-100">
-                                                                <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขผู้ใช้งาน
-                                                            </span>
-                                                        </button><?php } ?>
-                                                    <?php if ($object['user_delete']) { ?>
-                                                        <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['NUM_OT']; ?>)" data-bs-target="#modalToggle">
-                                                            <span class="badge bg-label-danger w-100">
-                                                                <i class="bx bx-trash me-1"></i>&nbsp; ลบผู้ใช้งาน
-                                                            </span>
-                                                        </button><?php } ?>
-                                                </div>
-                                            </div>
+                                            <?php if ($row['NUM_OT'] == '65047') { ?>
+                                                <i class='bx bx-check'></i>
+                                            <?php  } else { ?>
+                                                <?php if (!$object['user_change'] && !$object['user_delete']) { ?>
+                                                    <i class="bx bx-x me-1"></i>
+                                                <?php } else { ?>
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <?php if ($object['user_change']) { ?>
+                                                                <button class="dropdown-item" onclick="user_change(<?php echo $row['NUM_OT']; ?>)" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                                                                    <span class="badge bg-label-warning w-100">
+                                                                        <i class="bx bx-edit-alt me-1"></i>&nbsp; แก้ไขผู้ใช้งาน
+                                                                    </span>
+                                                                </button><?php } ?>
+                                                            <?php if ($object['user_delete']) { ?>
+                                                                <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(<?php echo $row['NUM_OT']; ?>)" data-bs-target="#modalToggle">
+                                                                    <span class="badge bg-label-danger w-100">
+                                                                        <i class="bx bx-trash me-1"></i>&nbsp; ลบผู้ใช้งาน
+                                                                    </span>
+                                                                </button><?php } ?>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+
+                                            <?php } ?>
+
+
+
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -188,6 +219,7 @@ $object = json_decode($json_data, true);
 
 <script>
     var uri = '<?php echo base_url(); ?>'
+
     const user_change = (id) => {
         $.ajax({
             type: 'POST',

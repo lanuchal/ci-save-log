@@ -91,7 +91,7 @@ class Model_request extends CI_Model
         return $result->result_array();
     }
 
-    public function update_req_id($id, $title_id, $node_id, $witness_id, $change_detail, $update_by)
+    public function update_req_id($id, $title_id, $node_id, $witness_id, $change_detail)
     {
 
         $data = array(
@@ -99,7 +99,7 @@ class Model_request extends CI_Model
             'req_title_id' => $title_id,
             'req_detial' => $change_detail,
             'req_witness' => $witness_id,
-            'update_by' => $update_by,
+            'update_by' => $this->session->userdata('req_NUM_OT'),
             'update_time' => date("Y-m-d h:i:s")
         );
 
@@ -113,7 +113,7 @@ class Model_request extends CI_Model
         //     'req_title_id' => $title_id,
         //     'req_detial' => $change_detail,
         //     'req_witness' => $witness_id,
-        //     'update_by' => $update_by,
+        //     'update_by' => $this->session->userdata('req_NUM_OT'),
         //     'update_time' => date("Y-m-d h:i:s")
         // );
 
@@ -126,7 +126,7 @@ class Model_request extends CI_Model
         // }
     }
 
-    public function create_req($node_id, $node_name, $witness_id, $witness_name, $title_id, $title_name, $create_detail, $update_by)
+    public function create_req($node_id, $node_name, $witness_id, $witness_name, $title_id, $title_name, $create_detail)
     {
 
         $data = array(
@@ -134,7 +134,7 @@ class Model_request extends CI_Model
             'req_title_id' => $title_id,
             'req_detial' => $create_detail,
             'req_witness' => $witness_id,
-            'create_by' => $update_by,
+            'create_by' => $this->session->userdata('req_NUM_OT'),
             'create_time' => date("Y-m-d h:i:s"),
             'deleted' => 0
         );
@@ -155,11 +155,11 @@ class Model_request extends CI_Model
             return false;
         }
     }
-    public function access_req($id, $update_by)
+    public function access_req($id)
     {
         $data = array(
             'req_status' => 1,
-            'req_aeccess' => $update_by,
+            'req_aeccess' => $this->session->userdata('req_NUM_OT'),
         );
         $this->db->where('req_id', $id);
         $result = $this->db->update('serv_request', $data);
@@ -167,7 +167,7 @@ class Model_request extends CI_Model
         $this->db->select('tb_person.Fname,tb_person.Lname,tb_nuser.NUM_OT');
         $this->db->from('tb_nuser');
         $this->db->join('tb_person', 'tb_nuser.NUM_OT = tb_person.NUM_OT');
-        $this->db->where('tb_person.NUM_OT', $update_by);
+        $this->db->where('tb_person.NUM_OT', $this->session->userdata('req_NUM_OT'));
         $result2 = $this->db->get();
 
         if ($result) {
@@ -176,11 +176,11 @@ class Model_request extends CI_Model
             return false;
         }
     }
-    public function access_cancel($id, $update_by)
+    public function access_cancel($id)
     {
         $data = array(
             'req_status' => 2,
-            'req_aeccess' => $update_by,
+            'req_aeccess' => $this->session->userdata('req_NUM_OT'),
         );
         $this->db->where('req_id', $id);
         $result = $this->db->update('serv_request', $data);
@@ -188,7 +188,7 @@ class Model_request extends CI_Model
         $this->db->select('tb_person.Fname,tb_person.Lname,tb_nuser.NUM_OT');
         $this->db->from('tb_nuser');
         $this->db->join('tb_person', 'tb_nuser.NUM_OT = tb_person.NUM_OT');
-        $this->db->where('tb_person.NUM_OT', $update_by);
+        $this->db->where('tb_person.NUM_OT', $this->session->userdata('req_NUM_OT'));
         $result2 = $this->db->get();
 
         if ($result) {
@@ -198,10 +198,10 @@ class Model_request extends CI_Model
         }
     }
     
-    public function delete_req($id, $update_by)
+    public function delete_req($id)
     {
         $data = array(
-            'update_by' => $update_by,
+            'update_by' => $this->session->userdata('req_NUM_OT'),
             'update_time' => date("Y-m-d h:i:s"),
             'deleted' => 1
         );
