@@ -25,6 +25,7 @@ class Ma_user extends MY_Controller
 		date_default_timezone_set('Asia/Bangkok');
 		$this->load->model('dashboards/manage/Model_ma_user', 'modelMaUser');
 		$this->load->model('dashboards/manage/Model_permission', 'modelPermission');
+		$this->load->model('Model_table_id', 'modelTableId');
 	}
 	public function index()
 	{
@@ -32,6 +33,7 @@ class Ma_user extends MY_Controller
 			$this->data['current_url'] = $this->uri->uri_string();
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
+            $this->data['row_title_head'] = "กำหนดผู้ใช้งาน";
 			$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
 			$this->data['row_user'] = $this->modelMaUser->get_user();
 			$this->data['row_permission'] = $this->modelPermission->get_permission_status_on();
@@ -57,20 +59,37 @@ class Ma_user extends MY_Controller
 		$permission_id = $this->security->xss_clean($this->input->post('permission_id'));
 		$permission_name = $this->security->xss_clean($this->input->post('permission_name'));
 
+		$result_permission_id  = sizeof($this->modelTableId->get_table_id('serv_permission', 'permission_id', $permission_id));
 
-		$result = $this->modelMaUser->update_user_permission($id, $permission_id, $permission_name);
+		$result = (!$result_permission_id) ?
+			array("status" => '0', "result_permission_id" => $result_permission_id) :
+			$result = $this->modelMaUser->update_user_permission($id, $permission_id, $permission_name);
 		echo json_encode($result);
+
+
+		// $result = $this->modelMaUser->update_user_permission($id, $permission_id, $permission_name);
+		// echo json_encode($result);
 	}
 	public function create_ma_user()
 	{
+
 		$num_ot = $this->security->xss_clean($this->input->post('num_ot'));
 		$user_name = $this->security->xss_clean($this->input->post('user_name'));
 		$permission_id = $this->security->xss_clean($this->input->post('permission_id'));
 		$permission_name = $this->security->xss_clean($this->input->post('permission_name'));
 
 
-		$result = $this->modelMaUser->create_ma_user($num_ot, $permission_id, $permission_name, $user_name);
+		$result_num_ot = sizeof($this->modelTableId->get_table_id('tb_person', 'NUM_OT', $num_ot));
+		$result_permission_id  = sizeof($this->modelTableId->get_table_id('serv_permission', 'permission_id', $permission_id));
+
+		$result = (!$result_num_ot || !$result_permission_id) ?
+			array("status" => '0', "result_num_ot" => $result_num_ot, "result_permission_id" => $result_permission_id) :
+			$result = $this->modelMaUser->create_ma_user($num_ot, $permission_id, $permission_name, $user_name);
 		echo json_encode($result);
+
+
+		// $result = $this->modelMaUser->create_ma_user($num_ot, $permission_id, $permission_name, $user_name);
+		// echo json_encode($result);
 	}
 
 	public function delete_user()

@@ -14,7 +14,7 @@ class Model_auth extends CI_Model
     {
         $password = getHash($password);
 
-        $this->db->select('serv_use.NUM_OT,tb_person.Fname, tb_person.Lname, tb_position.position_name,serv_permission.permission_set,serv_permission.permission_name');
+        $this->db->select('serv_use.NUM_OT,tb_person.Fname, tb_person.Lname, tb_position.position_name,serv_permission.permission_set,serv_permission.permission_name,serv_use.permission_id');
         $this->db->from('serv_use');
         $this->db->join('tb_nuser', 'serv_use.NUM_OT = tb_nuser.NUM_OT');
         $this->db->join('tb_position', 'tb_nuser.PP = tb_position.position_code');
@@ -32,6 +32,7 @@ class Model_auth extends CI_Model
                 'req_Fname'  => $row['Fname'],
                 'req_Lname'  => $row['Lname'],
                 'req_position_name'  => $row['position_name'],
+                'req_permission_id'  => $row['permission_id'],
                 'req_permission_name'  => $row['permission_name'],
                 'req_permission_set'  => $row['permission_set']
             );

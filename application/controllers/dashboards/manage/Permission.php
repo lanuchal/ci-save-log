@@ -33,9 +33,9 @@ class Permission extends MY_Controller
 		if (!$this->check_isreq_validated()) {
 
 			$this->data['current_url'] = $this->uri->uri_string();
-
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
+            $this->data['row_title_head'] = "จัดการสิทธิ์ในการใช้งาน";
 			$this->data['row_permission'] = $this->modelPermission->get_permission();
 			$this->loadView(array('pages/dashboard/manage/permission'));
 		}

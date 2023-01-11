@@ -21,6 +21,7 @@ class Node extends MY_Controller
 
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
+            $this->data['row_title_head'] = "จัดการ server";
 			$this->data['row_node'] = $this->modelNode->get_node();
 
 			$this->loadView(array('pages/dashboard/manage/node'));

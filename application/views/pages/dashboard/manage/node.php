@@ -200,6 +200,16 @@ $object = json_decode($json_data, true);
         </div>
     </div>
 </div>
+<div class="bs-toast toast toast-placement-ex m-2 top-0 end-0" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000" id="serv_toast">
+    <div class="toast-header">
+        <i class="bx bx-bell me-2"></i>
+        <div class="me-auto fw-semibold" id="serv_err_title"></div>
+        <small><?php date("Y-m-d"); ?></small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" id="serv_toast_close"></button>
+    </div>
+    <div class="toast-body" id="serv_err_detail"></div>
+</div>
+<!-- Toast with Placements -->
 
 <!-- Modal 1-->
 <div class="modal fade" id="modalToggle" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
@@ -228,6 +238,8 @@ $object = json_decode($json_data, true);
         </div>
     </div>
 </div>
+
+
 
 <script>
     var uri = '<?php echo base_url(); ?>'
@@ -258,6 +270,17 @@ $object = json_decode($json_data, true);
         const name_changed = document.getElementById("name_changed").value;
         const detail_changed = document.getElementById("detail_changed").value;
         const status_changed = document.querySelector('input[name="status_changed"]:checked').value;
+
+        if (!ip_changed || !name_changed || !detail_changed) {
+            console.log("error create_witness!!");
+            document.getElementById("serv_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("serv_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("serv_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("serv_toast_close").click();
+            }, 3000);
+            return;
+        }
 
         $.ajax({
             type: 'POST',
@@ -293,8 +316,14 @@ $object = json_decode($json_data, true);
         const create_detail = document.getElementById("create_detail").value;
         const create_status = document.querySelector('input[name="create_status"]:checked').value;
 
-        if (!create_ip || !create_name || !create_detail || !create_status) {
-            console.log("error !!");
+        if (!create_ip || !create_name || !create_detail) {
+            console.log("error create_witness!!");
+            document.getElementById("serv_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("serv_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("serv_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("serv_toast_close").click();
+            }, 3000);
             return;
         }
 

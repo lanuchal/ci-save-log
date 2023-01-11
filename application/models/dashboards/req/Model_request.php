@@ -105,25 +105,7 @@ class Model_request extends CI_Model
 
         $this->db->where('req_id', $id);
         $this->db->update('serv_request', $data);
-        return array("id" => $id, "update_time" => date("Y-m-d"));
-
-
-        // $data = array(
-        //     'node_id' => $node_id,
-        //     'req_title_id' => $title_id,
-        //     'req_detial' => $change_detail,
-        //     'req_witness' => $witness_id,
-        //     'update_by' => $this->session->userdata('req_NUM_OT'),
-        //     'update_time' => date("Y-m-d h:i:s")
-        // );
-
-        // $this->db->where('req_id', $id);
-        // $result = $this->db->update('serv_request', $data);
-        // if ($result) {
-        //     return array("id" => $id, "permission_name" => $permission_name, "update_time" => date("Y-m-d h:i:s"));
-        // } else {
-        //     return false;
-        // }
+        return array("status" => '1',"id" => $id, "update_time" => date("Y-m-d"));
     }
 
     public function create_req($node_id, $node_name, $witness_id, $witness_name, $title_id, $title_name, $create_detail)
@@ -140,6 +122,7 @@ class Model_request extends CI_Model
         );
 
         $result = $this->db->insert('serv_request', $data);
+
         $insert_id = $this->db->insert_id();
 
         $this->db->select('node_id');
@@ -150,7 +133,7 @@ class Model_request extends CI_Model
 
 
         if ($result) {
-            return array("lenght_row" => $lenght_row, "user_time" => date("Y-m-d h:i:s"), "id" => $insert_id, "node_id" => $node_id, "node_name" => $node_name, "witness_id" => $witness_id, "witness_name" => $witness_name, "req_title_id" => $title_id, "title_name" => $title_name,);
+            return array("status" => '1', "lenght_row" => $lenght_row, "user_time" => date("Y-m-d h:i:s"), "id" => $insert_id, "node_id" => $node_id, "node_name" => $node_name, "witness_id" => $witness_id, "witness_name" => $witness_name, "req_title_id" => $title_id, "title_name" => $title_name,);
         } else {
             return false;
         }
@@ -197,7 +180,7 @@ class Model_request extends CI_Model
             return false;
         }
     }
-    
+
     public function delete_req($id)
     {
         $data = array(

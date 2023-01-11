@@ -18,8 +18,8 @@
 <!-- <script type="text/javascript" charset="utf8" src="<?php echo base_url(); ?>assets/vendor/libs/datatable/jquery.dataTables.min.js"></script> -->
 <!-- D:\xampp\htdocs\request-server\assets\js\sweetalert2.js -->
 <script src="<?php echo base_url(); ?>assets/js/dashboards-analytics.js"></script>
-<!-- <script src="<?php echo base_url(); ?>assets/js/ui-toasts.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/ui-popover.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/js/ui-toasts.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/ui-popover.js"></script>
 <!-- <script src="<?php echo base_url(); ?>assets/js/sweetalert2.js"></script> -->
 <!-- custom -->
 <script src="<?php echo base_url(); ?>assets/js/custom.js"></script>
@@ -73,7 +73,7 @@ https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js -->
 
 
 
-<!-- <script async defer src="https://buttons.github.io/buttons.js"></script> -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 
 </html>

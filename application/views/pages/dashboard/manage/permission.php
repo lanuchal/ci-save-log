@@ -207,6 +207,18 @@
     </div>
 </div>
 
+<div class="bs-toast toast toast-placement-ex m-2 top-0 end-0" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000" id="permission_toast">
+    <div class="toast-header">
+        <i class="bx bx-bell me-2"></i>
+        <div class="me-auto fw-semibold" id="permission_err_permission"></div>
+        <small><?php date("Y-m-d"); ?></small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" id="permission_toast_close"></button>
+    </div>
+    <div class="toast-body" id="permission_err_detail"></div>
+</div>
+<!-- Toast with Placements -->
+
+
 <script>
     var uri = '<?php echo base_url(); ?>'
     // change node 
@@ -234,6 +246,17 @@
         const name_changed = document.getElementById("name_changed").value;
         const detail_changed = document.getElementById("detail_changed").value;
         const status_changed = document.querySelector('input[name="status_changed"]:checked').value;
+
+        if (!name_changed || !detail_changed) {
+            // console.log("error !!");
+            document.getElementById("permission_err_permission").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("permission_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("permission_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("permission_toast_close").click();
+            }, 3000);
+            return;
+        }
 
         $.ajax({
             type: 'POST',
@@ -265,8 +288,14 @@
         const create_detail = document.getElementById("create_detail").value;
         const create_status = document.querySelector('input[name="create_status"]:checked').value;
 
-        if (!create_name || !create_detail || !create_status) {
-            console.log("error !!");
+        if (!create_name || !create_detail) {
+            // console.log("error !!");
+            document.getElementById("permission_err_permission").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("permission_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("permission_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("permission_toast_close").click();
+            }, 3000);
             return;
         }
 

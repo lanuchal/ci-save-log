@@ -46,22 +46,19 @@ $object = json_decode($json_data, true);
                                         <label for="defaultFormControlInput2" class="form-label ps-2">กำหนดสิทธิ์</label>
                                         <input class="form-control" list="browsers2" name="browser2" id="create_permission" placeholder="กำหนดสิทธิ์">
                                         <datalist id="browsers2">
-                                            <?php foreach ($row_permission as $key => $row) { ?>
-                                                <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
-                                                <?php } ?>
+                                            <?php foreach ($row_permission as $key => $row) {
+                                                if ($this->session->userdata('req_permission_id') != '1' && $row['permission_id'] == '1') {
+                                                    continue;
+                                                } elseif ($this->session->userdata('req_permission_id') == '1' && $row['permission_id'] == '1') { ?>
+                                                    <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
+                                                    <?php    } else {
+                                                    ?>
+
+                                                    <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
+                                                <?php }
+                                            } ?>
                                         </datalist>
-
-                                        <!-- <select class="form-select" id="create_permission" aria-label="Default select example">
-                                            <?php foreach ($row_permission as $key => $row) { ?>
-                                                <option value="<?php echo $row['permission_id']; ?>"><?php echo  $row['permission_name']; ?></option>
-                                            <?php } ?>
-
-                                        </select> -->
-
-
                                     </div>
-
-
                                 </div>
                                 <button type="button" onclick="user_create()" class="btn btn-primary mt-4 mb-2 d-grid w-100">บันทึก</button>
                                 <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas" id="cancel_create">
@@ -97,18 +94,19 @@ $object = json_decode($json_data, true);
                                         <label for="defaultFormControlInput2" class="form-label ps-2">กำหนดสิทธิ์</label>
                                         <input class="form-control" list="browsers3" name="browser3" id="change_permission">
                                         <datalist id="browsers3">
-                                            <?php foreach ($row_permission as $key => $row) { ?>
-                                                <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
-                                                <?php } ?>
+
+                                            <?php foreach ($row_permission as $key => $row) {
+                                                if ($this->session->userdata('req_permission_id') != '1' && $row['permission_id'] == '1') {
+                                                    continue;
+                                                } elseif ($this->session->userdata('req_permission_id') == '1' && $row['permission_id'] == '1') { ?>
+                                                    <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
+                                                    <?php    } else {
+                                                    ?>
+
+                                                    <option value="<?php echo $row['permission_id'] . " - " . $row['permission_name']; ?>">
+                                                <?php }
+                                            } ?>
                                         </datalist>
-
-                                        <!-- 
-                                        <select class="form-select" id="change_permission" aria-label="Default select example">
-                                            <?php foreach ($row_permission as $key => $row) { ?>
-                                                <option value="<?php echo $row['permission_id']; ?>"><?php echo  $row['permission_name']; ?></option>
-                                            <?php } ?>
-                                        </select> -->
-
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-primary mt-4 mb-2 d-grid w-100" onclick="user_changed()">บันทึก</button>
@@ -217,8 +215,31 @@ $object = json_decode($json_data, true);
     </div>
 </div>
 
+<div class="bs-toast toast toast-placement-ex m-2 top-0 end-0" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000" id="ma_user_toast">
+    <div class="toast-header">
+        <i class="bx bx-bell me-2"></i>
+        <div class="me-auto fw-semibold" id="ma_user_err_title"></div>
+        <small><?php date("Y-m-d"); ?></small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" id="ma_user_toast_close"></button>
+    </div>
+    <div class="toast-body" id="ma_user_err_detail"></div>
+</div>
+<!-- Toast with Placements -->
+
 <script>
     var uri = '<?php echo base_url(); ?>'
+
+    const msg_error = (num_ot, permission_id) => {
+        var msg_error = "";
+        if (!num_ot && permission_id) {
+            msg_error = "ข้อมูลผู้ใช้งาน ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        } else if (num_ot && !permission_id) {
+            msg_error = "ข้อมูลสิทธ์การใช้งาน ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        } else if (!num_ot && !permission_id) {
+            msg_error = "ข้อมูลผู้ใช้งานและสิทธ์การใช้งาน ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        }
+        return msg_error;
+    }
 
     const user_change = (id) => {
         $.ajax({
@@ -243,6 +264,16 @@ $object = json_decode($json_data, true);
         const permission_name = change_permission.slice(change_permission.indexOf("-") + 1, change_permission.lenght);
 
 
+        if (!change_permission) {
+            document.getElementById("ma_user_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("ma_user_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("ma_user_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("ma_user_toast_close").click();
+            }, 3000);
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/ma_user/update_user_permission',
@@ -253,11 +284,24 @@ $object = json_decode($json_data, true);
             },
             dataType: 'json',
             success: (response) => {
-                console.log(response)
-                document.getElementById("cancel_change").click();
-                var id = response.id;
-                $('#user_permissions' + id).text(response.permission_name);
-                $('#update_times' + id).text(response.update_time);
+                console.log(response.result_permission_id)
+
+                if (response.status == '0') {
+                    var msg = msg_error(1, response.result_permission_id);
+                    $("#ma_user_err_title").html("เกิดข้อผิดพลาด!!");
+                    $("#ma_user_toast").addClass("show bg-danger");
+                    $("#ma_user_err_detail").html(msg);
+
+                    setTimeout(() => {
+                        document.getElementById("ma_user_toast_close").click();
+                    }, 3000);
+                } else {
+                    document.getElementById("cancel_change").click();
+                    var id = response.id;
+                    $('#user_permissions' + id).text(response.permission_name);
+                    $('#update_times' + id).text(response.update_time);
+                }
+
             }
         });
     }
@@ -273,15 +317,14 @@ $object = json_decode($json_data, true);
         const user_name = create_name.slice(create_name.indexOf("-") + 1, create_name.lenght);
 
         if (!create_name || !create_permission) {
-            console.log("error !!");
+            document.getElementById("ma_user_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("ma_user_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("ma_user_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("ma_user_toast_close").click();
+            }, 3000);
             return;
         }
-        // console.log(create_ip)
-
-        console.log(num_ot)
-        console.log(user_name)
-        console.log(create_permission)
-        // return;
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/ma_user/create_ma_user',
@@ -293,10 +336,19 @@ $object = json_decode($json_data, true);
             },
             dataType: 'json',
             success: (response) => {
-                console.log(response)
-                document.getElementById("cancel_create").click();
+                // console.log(response)
+                if (response.status == '0') {
+                    var msg = msg_error(response.result_num_ot, response.result_permission_id);
+                    $("#ma_user_err_title").html("เกิดข้อผิดพลาด!!");
+                    $("#ma_user_toast").addClass("show bg-danger");
+                    $("#ma_user_err_detail").html(msg);
 
-                var new_row = ` <tr id='td_user${response.num_ot}'>
+                    setTimeout(() => {
+                        document.getElementById("ma_user_toast_close").click();
+                    }, 3000);
+                } else {
+                    document.getElementById("cancel_create").click();
+                    var new_row = ` <tr id='td_user${response.num_ot}'>
                                         <td>${response.lenght_row}</td>
                                         <td id='user_ids${response.num_ot}'>${response.num_ot}</td>
                                         <td id='user_names${response.num_ot}'><i class='bx bx-user'></i> &nbsp; ${response.name}</td>
@@ -323,7 +375,10 @@ $object = json_decode($json_data, true);
                                         </td>
                                     </tr>`;
 
-                $('#row_user').append(new_row);
+                    $('#row_user').append(new_row);
+                }
+
+
             }
         });
     }

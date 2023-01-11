@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="<?php echo base_url(); ?>assets/" data-template="vertical-menu-template-free">
+<html>
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Dashboard</title>
+
+  <?php echo "<title>" . strval($row_title_head) . "</title>" ?>
+  <!-- <title>a</title> -->
 
   <meta name="description" content="" />
 
@@ -34,9 +36,9 @@
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/vendor/libs/datatable/css/buttons.bootstrap5.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/vendor/libs/datatable/css/responsive.bootstrap5.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/vendor/libs/datatable/css/select.dataTables.min.css" />
-  
-  
-  
+
+
+
   <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.3.1/css/fixedHeader.bootstrap5.min.css2" /> -->
   <!-- https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css -->
   <!-- https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css

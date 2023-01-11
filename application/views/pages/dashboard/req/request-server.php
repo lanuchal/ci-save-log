@@ -228,7 +228,8 @@ $object = json_decode($json_data, true);
                                                 <i class='bx bx-check'></i>
                                             <?php } elseif ($row['req_status'] == '0') { ?>
                                                 <?php if (!($object['req_access'] && $num_ot != $row['create_by']) && !($object['req_change']  && $num_ot == $row['create_by']) && !$object['req_cancel'] && !($object['req_delete'] && $num_ot == $row['create_by'])) { ?>
-                                                    <i class="bx bx-x me-1"></i>
+                                                    <!-- <i class="bx bx-x me-1"></i> -->
+                                                    <i class='bx bx-question-mark'></i>
                                                 <?php } else { ?>
                                                     <div class="dropdown">
                                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -251,7 +252,7 @@ $object = json_decode($json_data, true);
                                                                     </span>
                                                                 </button>
                                                             <?php } ?>
-                                                            <?php if ($object['req_cancel']) { ?>
+                                                            <?php if ($object['req_cancel'] && $num_ot != $row['create_by']) { ?>
 
                                                                 <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id_cancel(<?php echo $row['req_id']; ?>)" data-bs-target="#modalToggle_cancel">
                                                                     <span class="badge bg-label-danger w-100">
@@ -283,11 +284,24 @@ $object = json_decode($json_data, true);
                         </table>
                     </div>
                 </div>
+
             </div>
 
         </div>
     </div>
 </div>
+
+
+<div class="bs-toast toast toast-placement-ex m-2 top-0 end-0" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000" id="req_toast">
+    <div class="toast-header">
+        <i class="bx bx-bell me-2"></i>
+        <div class="me-auto fw-semibold" id="req_err_title"></div>
+        <small><?php date("Y-m-d"); ?></small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" id="req_toast_close"></button>
+    </div>
+    <div class="toast-body" id="req_err_detail"></div>
+</div>
+<!-- Toast with Placements -->
 
 <!-- Modal 1-->
 <div class="modal fade" id="modalToggle_access" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
@@ -378,6 +392,23 @@ $object = json_decode($json_data, true);
 
 <script>
     var uri = '<?php echo base_url(); ?>'
+    const msg_error = (node, title, witness) => {
+        var msg_error = "";
+        if (!node && title && witness) {
+            msg_error = "ข้อมูล server ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        } else if (node && !title && witness) {
+            msg_error = "ข้อมูล รายการ ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        } else if (node && title && !witness) {
+            msg_error = "ข้อมูลพยาน ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        } else if (!node && !title && witness) {
+            msg_error = "ข้อมูล server และ รายการ ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        } else if (node && !title && !witness) {
+            msg_error = "ข้อมูล พยาน และ รายการ ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        } else if (!node && !title && !witness) {
+            msg_error = "ข้อมูล server พยาน และ รายการ ไม่ถูกต้องกรุณากรอกข้อมูลและทำรายการใหม่อีกครั้ง";
+        }
+        return msg_error;
+    }
     const req_change = (id) => {
         // console.log(id);
         // return;
@@ -413,6 +444,18 @@ $object = json_decode($json_data, true);
         const title_id = change_title.slice(0, change_title.indexOf("-") - 1);
         const title_name = change_title.slice(change_title.indexOf("-") + 1, change_title.lenght);
         // return;
+
+        if (!change_node || !change_title || !change_detail || !change_node) {
+            console.log("error create_witness!!");
+            document.getElementById("req_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("req_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("req_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("req_toast_close").click();
+            }, 3000);
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/req/request_server/update_req_id',
@@ -428,19 +471,31 @@ $object = json_decode($json_data, true);
             },
             dataType: 'json',
             success: (response) => {
-                // console.log(response)
 
+                if (response.status == '0') {
+                    var msg = msg_error(response.result_node_id, response.result_title_id, response.result_witness_id);
+                    $("#req_err_title").html("เกิดข้อผิดพลาด!!");
+                    $("#req_toast").addClass("show bg-danger");
+                    $("#req_err_detail").html(msg);
 
+                    setTimeout(() => {
+                        document.getElementById("req_toast_close").click();
+                    }, 3000);
+                } else {
 
-                document.getElementById("cancel_change").click();
-                $('#req_node' + id).html(`<small>${node_name}</small>`);
-                $('#req_title' + id).html(`<strong><small>${title_name}</small></strong>:<small>${change_detail}</small>`);
-                $('#req_witness' + id).html(`<small>${witness_name}</small>`);
-                $('#update_times' + id).html(`<small>${response.update_time}</small>`);
+                    document.getElementById("cancel_change").click();
+                    $('#req_node' + id).html(`<small>${node_name}</small>`);
+                    $('#req_title' + id).html(`<strong><small>${title_name}</small></strong>:<small>${change_detail}</small>`);
+                    $('#req_witness' + id).html(`<small>${witness_name}</small>`);
+                    $('#update_times' + id).html(`<small>${response.update_time}</small>`);
+                }
+
             }
         });
     }
     // insert node
+
+
     const req_create = () => {
         const create_witness = document.getElementById("create_witness").value;
         const create_title = document.getElementById("create_title").value;
@@ -456,7 +511,13 @@ $object = json_decode($json_data, true);
         const title_name = create_title.slice(create_title.indexOf("-") + 1, create_title.lenght);
 
         if (!create_witness || !create_title || !create_detail || !create_node) {
-            console.log("error !!");
+            console.log("error create_witness!!");
+            document.getElementById("req_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("req_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("req_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("req_toast_close").click();
+            }, 3000);
             return;
         }
 
@@ -474,8 +535,21 @@ $object = json_decode($json_data, true);
             },
             dataType: 'json',
             success: (response) => {
-                document.getElementById("cancel_create").click();
-                location.reload();
+                console.log("create_req response = ", response)
+                if (response.status == '0') {
+                    var msg = msg_error(response.result_node_id, response.result_title_id, response.result_witness_id);
+                    $("#req_err_title").html("เกิดข้อผิดพลาด!!");
+                    $("#req_toast").addClass("show bg-danger");
+                    $("#req_err_detail").html(msg);
+
+                    setTimeout(() => {
+                        document.getElementById("req_toast_close").click();
+                    }, 3000);
+                } else {
+                    document.getElementById("cancel_create").click();
+                    location.reload();
+                }
+
             }
         });
     }
@@ -490,6 +564,7 @@ $object = json_decode($json_data, true);
             },
             dataType: 'json',
             success: (response) => {
+                // console.log(response)
                 $('#delete_id').val(response[0].req_id);
                 $('#delete_name').html(response[0].req_title_name);
                 $('#detail').html(response[0].req_detial);

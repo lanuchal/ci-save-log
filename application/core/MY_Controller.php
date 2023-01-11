@@ -10,11 +10,13 @@ class MY_Controller extends CI_Controller
 
         $this->load->library('session');
         $this->session->set_userdata('last_url', $this->uri->uri_string());
+
+        $this->data['row_title_head'] = "ระบบบันทึกเข้าใช้งาน server";
     }
 
     protected function loadView($body_views)
     {
-        $this->load->view('common/dashboard/header');
+        $this->load->view('common/dashboard/header', $this->data);
         $this->load->view('common/dashboard/start');
         $this->load->view('common/dashboard/menu', $this->data);
         $this->load->view('common/dashboard/nav');

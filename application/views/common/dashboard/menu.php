@@ -104,31 +104,34 @@ $object = json_decode($json_data, true);
         <?php  } ?>
 
         <!-- User interface -->
-        <li class="menu-item <?php if (substr($nav_uri, 0, 9) == "mamage_ma")
-                                    echo "active open"; ?>">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-cog"></i>
-                <div data-i18n="User interface">จัดการ</div>
-            </a>
-            <ul class="menu-sub">
-                <?php if ($object['permission_menu']) { ?>
-                    <li class="menu-item <?php if ($nav_uri == "mamage_ma_permission")
-                                                echo "active"; ?>">
-                        <a href="<?php echo base_url('mamage_ma_permission'); ?>" class="menu-link">
-                            <div data-i18n="Alerts">จัดการสิทธิ์</div>
-                        </a>
-                    </li>
-                <?php  } ?>
-                <?php if ($object['user_menu']) { ?>
-                    <li class="menu-item <?php if ($nav_uri == "mamage_ma_user")
-                                                echo "active"; ?>">
-                        <a href="<?php echo base_url('mamage_ma_user'); ?>" class="menu-link">
-                            <div data-i18n="Alerts">จัดการผู้ใช้งาน</div>
-                        </a>
-                    </li>
-                <?php  } ?>
-            </ul>
-        </li>
+
+        <?php if ($object['permission_menu'] || $object['user_menu']) { ?>
+            <li class="menu-item <?php if (substr($nav_uri, 0, 9) == "mamage_ma")
+                                        echo "active open"; ?>">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-cog"></i>
+                    <div data-i18n="User interface">จัดการ</div>
+                </a>
+                <ul class="menu-sub">
+                    <?php if ($object['permission_menu']) { ?>
+                        <li class="menu-item <?php if ($nav_uri == "mamage_ma_permission")
+                                                    echo "active"; ?>">
+                            <a href="<?php echo base_url('mamage_ma_permission'); ?>" class="menu-link">
+                                <div data-i18n="Alerts">จัดการสิทธิ์</div>
+                            </a>
+                        </li>
+                    <?php  } ?>
+                    <?php if ($object['user_menu']) { ?>
+                        <li class="menu-item <?php if ($nav_uri == "mamage_ma_user")
+                                                    echo "active"; ?>">
+                            <a href="<?php echo base_url('mamage_ma_user'); ?>" class="menu-link">
+                                <div data-i18n="Alerts">จัดการผู้ใช้งาน</div>
+                            </a>
+                        </li>
+                    <?php  } ?>
+                </ul>
+            </li>
+        <?php  } ?>
         <li class="menu-item <?php if ($nav_uri == "cards_basic")
                                     echo "active"; ?>">
             <a href="<?php echo base_url('logout'); ?>" class="menu-link" data-bs-toggle="modal" data-bs-target="#modalToggle_logout">
@@ -139,35 +142,3 @@ $object = json_decode($json_data, true);
     </ul>
 </aside>
 <!-- / Menu -->
-
-
-<!-- Modal 1-->
-<div class="modal fade" id="modalToggle_logout" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalToggleLabel"><b>ออกจากระบบ</b> </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="cancel_modal"></button>
-            </div>
-            <div class="modal-body p-0 m-0">
-                <div class="d-flex justify-content-center mt-3">
-                    <input type="hidden" id="delete_num_ot">
-                    <p>ยืนยันที่จะออกจากระบบ &nbsp;</p>
-                    <b>ผู้ใช้งาน </b>
-                    :
-                    <p class="text-primary mx-2"><?php echo $this->session->userdata('req_Fname') . " " . $this->session->userdata('req_Lname'); ?> </p>
-                    <p> ?</p>
-                </div>
-            </div>
-            <div class="modal-footer" style="margin-top: -1rem;">
-
-                <form id="formAuthentication" class="mb-3" action="<?php echo base_url('auth/auth/logout'); ?>" method="POST">
-                    <button class="btn btn-danger " type="submit">
-                        ยืนยัน
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>

@@ -20,28 +20,27 @@
                     </div>
 
 
-                    <form id="formAuthentication" class="mb-3" action="<?php echo base_url('auth/auth/sign_in'); ?>" method="POST">
-                        <input type="hidden" name="last_path" id="last_path" value="<?php echo $current_url; ?>">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="กรุณากรอกรหัสพนักงาน" autofocus />
-                        </div>
-                        <div class="mb-3 form-password-toggle">
-                            <div class="d-flex justify-content-between">
-                                <label class="form-label" for="password">Password</label>
-                                <!-- <a href="<?php echo base_url('auth_forgot_password_basic'); ?>">
+                    <!-- <form id="formAuthentication" class="mb-3" action="<?php echo base_url('auth/auth/sign_in'); ?>" method="POST"> -->
+                    <input type="hidden" name="last_path" id="last_path" value="<?php echo $current_url; ?>">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="กรุณากรอกรหัสพนักงาน" autofocus />
+                    </div>
+                    <div class="mb-3 form-password-toggle">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label" for="password">Password</label>
+                            <!-- <a href="<?php echo base_url('auth_forgot_password_basic'); ?>">
                                     <small>Forgot Password?</small>
                                 </a> -->
-                            </div>
-                            <div class="input-group input-group-merge">
-                                <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                            </div>
                         </div>
-                        <div class="mb-3">
-                            <button class="btn btn-primary d-grid w-100" type="submit" onclick="valdate()">Sign in</button>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         </div>
-                    </form>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary d-grid w-100" onclick="valdate()">Sign in</button>
+                    </div>
 
                     <!-- Primary Toast -->
 
@@ -51,23 +50,60 @@
         </div>
     </div>
 </div>
-
-
-<div class="bs-toast toast fade  position-absolute top-0 end-0 m-2 bg-danger <?php if ($label_error == 1) {
-                                                                                    echo 'show';
-                                                                                } ?>" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="bs-toast toast toast-placement-ex m-2 top-0 start-50 translate-middle-x" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000" id="login_toast">
     <div class="toast-header">
-        <i class='bx bx-bell'></i> &nbsp;
-        <div>เกิดข้อผิดพลาด <?php echo $label_error; ?></div>
-        <small class="ms-auto">11 mins ago</small>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" id="cancel_toast"></button>
+        <i class="bx bx-bell me-2"></i>
+        <div class="me-auto fw-semibold" id="login_err_title"></div>
+        <small><?php date("Y-m-d"); ?></small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" id="login_toast_close"></button>
     </div>
-    <div class="toast-body p-4">
-        &emsp; ข้อผู้ใช้ไม่ถูกต้องไม่ถูกต้อง หรือผู้ใช้งานไม่ได้รับสิทธิ์ในการเข้าใช้งานระบบ
-    </div>
+    <div class="toast-body" id="login_err_detail"></div>
 </div>
+<!-- Toast with Placements -->
+
 <script>
-    setTimeout(() => {
-        document.getElementById("cancel_toast").click();
-    }, 2000);
+    var uri = '<?php echo base_url(); ?>'
+
+    const valdate = () => {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const last_path = document.getElementById("last_path").value;
+        // last_path
+        if (!username || !password) {
+            // console.log('removing')
+            document.getElementById("login_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("login_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("login_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("login_toast_close").click();
+            }, 3000);
+            return;
+        }
+
+
+        $.ajax({
+            type: 'POST',
+            url: uri + 'auth/auth/sign_in',
+            data: {
+                username: username,
+                password: password,
+                last_path: last_path
+            },
+            dataType: 'json',
+            success: (response) => {
+                console.log(response)
+
+                if (response.status == '1') {
+                    window.location.assign(`${uri + response.last_path}`);
+                } else {
+                    document.getElementById("login_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+                    document.getElementById("login_err_detail").innerHTML = "รหัสผู้ใช้งานหรือรหัสผ่านของผู้ใช้งานไม่ถูกต้อง";
+                    document.getElementById("login_toast").classList.add("show", "bg-danger");
+                    setTimeout(() => {
+                        document.getElementById("login_toast_close").click();
+                    }, 3000);
+                }
+            }
+        });
+    }
 </script>

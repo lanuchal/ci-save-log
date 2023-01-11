@@ -159,6 +159,17 @@ $object = json_decode($json_data, true);
     </div>
 </div>
 
+<div class="bs-toast toast toast-placement-ex m-2 top-0 end-0" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000" id="title_toast">
+    <div class="toast-header">
+        <i class="bx bx-bell me-2"></i>
+        <div class="me-auto fw-semibold" id="title_err_title"></div>
+        <small><?php date("Y-m-d"); ?></small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" id="title_toast_close"></button>
+    </div>
+    <div class="toast-body" id="title_err_detail"></div>
+</div>
+<!-- Toast with Placements -->
+
 
 <!-- Modal 1-->
 <div class="modal fade" id="modalToggle" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none" aria-hidden="true">
@@ -208,11 +219,21 @@ $object = json_decode($json_data, true);
     }
     // change node action
     const title_changed = () => {
-
+        // console.log('removing')
         const id_title = document.getElementById("id_title").value;
         const name_changed = document.getElementById("name_changed").value;
         const detail_changed = document.getElementById("detail_changed").value;
 
+        if (!name_changed || !detail_changed) {
+            // console.log('removing')
+            document.getElementById("title_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("title_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("title_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("title_toast_close").click();
+            }, 3000);
+            return;
+        }
         $.ajax({
             type: 'POST',
             url: uri + 'dashboards/manage/title/update_title_id',
@@ -237,7 +258,12 @@ $object = json_decode($json_data, true);
         const create_detail = document.getElementById("create_detail").value;
 
         if (!create_name || !create_detail) {
-            console.log("error !!");
+            document.getElementById("title_err_title").innerHTML = "เกิดข้อผิดพลาด!!";
+            document.getElementById("title_err_detail").innerHTML = "กรุณากรอกข้อมูลให้ครบถ้วน";
+            document.getElementById("title_toast").classList.add("show", "bg-danger");
+            setTimeout(() => {
+                document.getElementById("title_toast_close").click();
+            }, 3000);
             return;
         }
 

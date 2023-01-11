@@ -67,7 +67,7 @@ class Model_ma_user extends CI_Model
         $this->db->where('NUM_OT', $id);
         $result = $this->db->update('serv_use', $data);
         if ($result) {
-            return array("id" => $id, "permission_name" => $permission_name, "update_time" => date("Y-m-d h:i:s"));
+            return array("status" => '1', "id" => $id, "permission_name" => $permission_name, "update_time" => date("Y-m-d h:i:s"));
         } else {
             return false;
         }
@@ -95,7 +95,7 @@ class Model_ma_user extends CI_Model
 
 
         if ($result) {
-            return array("lenght_row" => $lenght_row, "user_time" => date("Y-m-d h:i:s"), "id" => $insert_id, "num_ot" => $num_ot, "permission_id" => $permission_id, "name" => $name, "permission_name" => $permission_name);
+            return array("status" => '1', "lenght_row" => $lenght_row, "user_time" => date("Y-m-d h:i:s"), "id" => $insert_id, "num_ot" => $num_ot, "permission_id" => $permission_id, "name" => $name, "permission_name" => $permission_name);
         } else {
             return false;
         }

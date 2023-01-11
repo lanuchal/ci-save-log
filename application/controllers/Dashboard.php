@@ -21,23 +21,20 @@ class Dashboard extends MY_Controller
 	 */
 	public function index()
 	{
-
-
 		if (!$this->check_isreq_validated()) {
-
 			$this->data['current_url'] = $this->uri->uri_string();
-
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
-			$this->loadView(array('pages/dashboard/dashboard'));
+
+			$this->data['row_title_head'] = "ระบบบันทึกเข้าใช้งาน server";
+			// $this->loadView(array('pages/dashboard/dashboard'));
+			$this->loadView(array('pages/dashboard/mantianane/error404'));
 			$json_data = $this->session->userdata('req_permission_set');
-
 			$data = json_decode($json_data);
-
 			foreach ($data as $key => $value) {
 				$uri = "";
 				if (substr($key, 0, 3) == "req") {
-					$uri = "report";
+					$uri = "request_server";
 				} elseif (substr($key, 0, 3) == "ser") {
 					$uri = "mamage_node";
 				} elseif (substr($key, 0, 3) == "tit") {
@@ -47,7 +44,6 @@ class Dashboard extends MY_Controller
 				} elseif (substr($key, 0, 3) == "use") {
 					$uri = "mamage_ma_user";
 				}
-
 				if ($value == '1') {
 					header("Location: " . base_url($uri) . "");
 					return;

@@ -34,6 +34,8 @@ class Title extends MY_Controller
 
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
+			
+            $this->data['row_title_head'] = "จัดการรายการ";
 			$this->data['row_title'] = $this->ModelTitle->get_title();
 
 			$this->loadView(array('pages/dashboard/manage/title'));

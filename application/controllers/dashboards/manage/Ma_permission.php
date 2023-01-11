@@ -36,7 +36,9 @@ class Ma_permission extends MY_Controller
 
             $this->loadViewPageAuth(array('pages/auth/auth-login'));
         } else {
+            $this->data['row_title_head'] = "กำหนดสิทธิ์ในการใช้งาน";
             $this->data['row_permission'] = $this->modelPermission->get_permission();
+
             $this->loadView(array('pages/dashboard/manage/ma-permission'));
         }
     }
