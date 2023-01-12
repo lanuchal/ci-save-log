@@ -169,6 +169,7 @@ $object = json_decode($json_data, true);
                                     $name_status = "";
                                     $lable_color = "";
                                     $user_access = $row['Fname'] . " " . $row['Lname'];
+
                                     $d = ($row['update_time'] == null) ? $row['create_time'] : $row['update_time'];
                                     $date_now = date("Y-m-d", strtotime($d));
                                     if ($row['req_status'] == '0') {
@@ -219,7 +220,7 @@ $object = json_decode($json_data, true);
                                             </small>
                                         </td>
                                         <td id='req_status<?php echo $row['req_id'] ?>'>
-                                            <span class="badge me-1 <?php echo $lable_color; ?>" class="text-start" <?php if ($row['req_status'] == '1') { ?> data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="<?php echo $user_access; ?>" <?php } ?>>
+                                            <span class="badge me-1 <?php echo $lable_color; ?>" class="text-start" <?php if ($row['req_status'] == '1' || $row['req_status'] == '2') { ?> data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="<?php echo $user_access; ?>" <?php } ?>>
                                                 <?php echo $name_status; ?>
                                             </span>
                                         </td>
@@ -319,8 +320,8 @@ $object = json_decode($json_data, true);
                     <p class="text-primary mx-2" id="delete_name_a"> </p>
                     <p> ?</p>
                 </div>
-                <div class="d-flex justify-content-center mb-2 text-primary">
-                    <small id="detail_a"></small>
+                <div class="d-flex justify-content-center mb-2 text-primary px-4">
+                    <small class="text-break" id="detail_a"></small>
                 </div>
             </div>
             <div class="modal-footer" style="margin-top: -1rem;">
@@ -348,8 +349,8 @@ $object = json_decode($json_data, true);
                     <p class="text-primary mx-2" id="delete_name_c"> </p>
                     <p> ?</p>
                 </div>
-                <div class="d-flex justify-content-center mb-2 text-primary">
-                    <small id="detail_c"></small>
+                <div class="d-flex justify-content-center mb-2 text-primary px-4">
+                    <small class="text-break" id="detail_c"></small>
                 </div>
             </div>
             <div class="modal-footer" style="margin-top: -1rem;">
@@ -377,8 +378,8 @@ $object = json_decode($json_data, true);
                     <p class="text-primary mx-2" id="delete_name"> </p>
                     <p> ?</p>
                 </div>
-                <div class="d-flex justify-content-center mb-2 text-primary">
-                    <small id="detail"></small>
+                <div class="d-flex justify-content-center mb-2 text-primary px-4">
+                    <small class="text-break" id="detail"></small>
                 </div>
             </div>
             <div class="modal-footer" style="margin-top: -1rem;">
@@ -483,9 +484,10 @@ $object = json_decode($json_data, true);
                     }, 3000);
                 } else {
 
+
                     document.getElementById("cancel_change").click();
                     $('#req_node' + id).html(`<small>${node_name}</small>`);
-                    $('#req_title' + id).html(`<strong><small>${title_name}</small></strong>:<small>${change_detail}</small>`);
+                    $('#req_title' + id).html(`<strong><small>${title_name}</small></strong>:<small class="text-break">${change_detail}</small>`);
                     $('#req_witness' + id).html(`<small>${witness_name}</small>`);
                     $('#update_times' + id).html(`<small>${response.update_time}</small>`);
                 }
@@ -656,10 +658,10 @@ $object = json_decode($json_data, true);
             },
             dataType: 'json',
             success: (response) => {
+                console.log(response)
                 document.getElementById("cancel_modal_c").click();
                 const name_access = response.user_access[0].Fname + " " + response.user_access[0].Lname;
-                // console.log(response);
-                const lable_status = `<span class="badge me-1 bg-label-danger" class="text-start" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="${name_access}"><smail>ยกเลิก</smail></span>`;
+                const lable_status = `<span class="badge me-1 bg-label-danger" class="text-start" data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top" title="${name_access}">ยกเลิก</span>`;
 
                 $('#req_status' + id).html(lable_status);
                 $('#manage_req' + id).html(`<i class='bx bx-x'></i>`);

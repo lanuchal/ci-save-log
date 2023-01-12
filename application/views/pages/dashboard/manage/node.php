@@ -154,7 +154,7 @@ $object = json_decode($json_data, true);
                                         <td><?php echo $key + 1; ?></td>
                                         <td id='node_ips<?php echo $row['node_id'] ?>'><?php echo $row['node_ip']; ?></td>
                                         <td id='node_names<?php echo $row['node_id'] ?>'><?php echo $row['node_name']; ?></td>
-                                        <td id='node_details<?php echo $row['node_id'] ?>'><?php echo $row['node_detail']; ?></td>
+                                        <td id='node_details<?php echo $row['node_id'] ?>' class="text-break"><?php echo $row['node_detail']; ?></td>
                                         <td id='node_statuss<?php echo $row['node_id'] ?>'>
                                             <span class="badge me-1 <?php echo $label_color; ?>">
                                                 <?php echo $status_node; ?>
@@ -338,9 +338,61 @@ $object = json_decode($json_data, true);
             },
             dataType: 'json',
             success: (response) => {
-                console.log(response)
-                document.getElementById("cancel_create").click();
+                // console.log(response) 
+                // $.ajax({
+                //     type: 'GET',
+                //     url: uri + 'dashboards/manage/node/get_node',
+                //     dataType: 'json',
+                //     success: function(response2) {
+                //         const jsonData = JSON.parse(response2);
+                //         var new_row = "";
+                //         var count = 0;
+                //         jsonData.forEach(element => {
+                //             count++;
+                //             const status_node = (element.node_status == 1) ? "เปิดใช้งาน" : "ปิดใช้งาน";
+                //             const label_color = (element.node_status == 1) ? "bg-label-success" : "bg-label-secondary";
+                //             new_row = new_row + ` <tr id='td_node${element.node_id}'>
+                //                         <td>${count}</td>
+                //                         <td id='node_ips${element.node_id}'>${element.node_ip}</td>
+                //                         <td id='node_names${element.node_id}'>${element.node_name}</td>
+                //                         <td id='node_details${element.node_id}'>${element.node_detail}</td>
+                //                         <td id='node_statuss${element.node_id}'>
+                //                             <span class="badge me-1 ${label_color}">
+                //                             ${status_node}
+                //                             </span>
+                //                         </td>
+                //                         <td id='update_times${element.node_id}'>${element.update_time == null?element.create_time:element.update_time}</td>
+                //                         <td class="text-center">
+                //                             <div class="dropdown">
+                //                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                //                                     <i class="bx bx-dots-vertical-rounded"></i>
+                //                                 </button>
+                //                                 <div class="dropdown-menu">
+                //                                     <button class="dropdown-item" onclick="node_change(${element.node_id})" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBoth_change" aria-controls="offcanvasBoth">
+                //                                         <span class="badge bg-label-warning w-100">
+                //                                             <i class="bx bx-edit-alt me-1"></i>&nbsp; Edit SERVER
+                //                                         </span>
+                //                                     </button>
+                //                                     <button class="dropdown-item" type="button" data-bs-toggle="modal" onclick="sent_id(${element.node_id})" data-bs-target="#modalToggle">
+                //                                         <span class="badge bg-label-danger w-100">
+                //                                             <i class="bx bx-trash me-1"></i>&nbsp; Delete SERVER
+                //                                         </span>
+                //                                     </button>
+                //                                 </div>
+                //                             </div>
+                //                         </td>
+                //                     </tr>`;
+                //         });
+                //         document.getElementById("cancel_create").click();
+                //         $('#row_node').html(new_row);
+                //         return;
+                //     }
+                // })
 
+
+                document.getElementById("cancel_create").click();
+                location.reload();
+                return;
                 const status_node = (response.node_status == 1) ? "เปิดใช้งาน" : "ปิดใช้งาน";
                 const label_color = (response.node_status == 1) ? "bg-label-success" : "bg-label-secondary";
 

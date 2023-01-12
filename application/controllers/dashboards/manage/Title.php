@@ -34,11 +34,18 @@ class Title extends MY_Controller
 
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
-			
-            $this->data['row_title_head'] = "จัดการรายการ";
-			$this->data['row_title'] = $this->ModelTitle->get_title();
 
-			$this->loadView(array('pages/dashboard/manage/title'));
+			$json_data = $this->session->userdata('req_permission_set');
+			$object = json_decode($json_data, true);
+			if ($object['title_menu']) {
+
+				$this->data['row_title_head'] = "จัดการรายการ";
+				$this->data['row_title'] = $this->ModelTitle->get_title();
+
+				$this->loadView(array('pages/dashboard/manage/title'));
+			} else {
+				header("Location: " . base_url('dashboard') . "");
+			}
 		}
 	}
 	public function get_title_id()

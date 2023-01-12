@@ -36,10 +36,17 @@ class Ma_permission extends MY_Controller
 
             $this->loadViewPageAuth(array('pages/auth/auth-login'));
         } else {
-            $this->data['row_title_head'] = "กำหนดสิทธิ์ในการใช้งาน";
-            $this->data['row_permission'] = $this->modelPermission->get_permission();
 
-            $this->loadView(array('pages/dashboard/manage/ma-permission'));
+            $json_data = $this->session->userdata('req_permission_set');
+            $object = json_decode($json_data, true);
+            if ($object['permission_menu']) {
+                $this->data['row_title_head'] = "กำหนดสิทธิ์ในการใช้งาน";
+                $this->data['row_permission'] = $this->modelMaPermission->get_ma_permission();
+
+                $this->loadView(array('pages/dashboard/manage/ma-permission'));
+            } else {
+                header("Location: " . base_url('dashboard') . "");
+            }
         }
     }
     public function change_permission_set()

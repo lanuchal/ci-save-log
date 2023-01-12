@@ -140,7 +140,6 @@ $object = json_decode($json_data, true);
                                         <td id='user_id<?php echo $row['NUM_OT'] ?>'><?php echo $row['NUM_OT']; ?></td>
                                         <td id='user_names<?php echo $row['NUM_OT'] ?>'><i class='bx bx-user'></i> &nbsp; <?php echo $row['Fname'] . " " . $row['Lname']; ?></td>
                                         <td id='user_permissions<?php echo $row['NUM_OT'] ?>'><?php echo $row['permission_name']; ?></td>
-
                                         <td id='update_times<?php echo $row['NUM_OT'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
                                         <td class="text-center">
                                             <?php if ($row['NUM_OT'] == '65047') { ?>
@@ -169,11 +168,7 @@ $object = json_decode($json_data, true);
                                                         </div>
                                                     </div>
                                                 <?php } ?>
-
                                             <?php } ?>
-
-
-
                                         </td>
                                     </tr>
                                 <?php } ?>

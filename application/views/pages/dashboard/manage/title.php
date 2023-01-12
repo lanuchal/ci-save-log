@@ -117,7 +117,7 @@ $object = json_decode($json_data, true);
                                     <tr id='td_title<?php echo $row['req_title_id'] ?>'>
                                         <td><?php echo $key + 1; ?></td>
                                         <td id='title_names<?php echo $row['req_title_id'] ?>'><?php echo $row['req_title_name']; ?></td>
-                                        <td id='title_details<?php echo $row['req_title_id'] ?>'><?php echo $row['req_title_detail']; ?></td>
+                                        <td id='title_details<?php echo $row['req_title_id'] ?>'  class="text-break"><?php echo $row['req_title_detail']; ?></td>
 
                                         <td id='update_times<?php echo $row['req_title_id'] ?>'><?php echo ($row['update_time'] == null) ? $row['create_time'] : $row['update_time']; ?></td>
                                         <td class="text-center">
@@ -281,7 +281,7 @@ $object = json_decode($json_data, true);
                 var new_row = ` <tr id='td_title${response.id}'>
                                         <td>${response.lenght_row}</td>
                                         <td id='title_names${response.id}'>${response.req_title_name}</td>
-                                        <td id='title_details${response.id}'>${response.req_title_detail}</td>
+                                        <td id='title_details${response.id}'  class="text-break">${response.req_title_detail}</td>
        
                                         <td id='update_times${response.id}'>${response.title_time}</td>
                                         <td class="text-center">

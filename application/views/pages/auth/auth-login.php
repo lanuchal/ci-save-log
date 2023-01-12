@@ -92,7 +92,7 @@
             dataType: 'json',
             success: (response) => {
                 console.log(response)
-
+                // return;
                 if (response.status == '1') {
                     window.location.assign(`${uri + response.last_path}`);
                 } else {

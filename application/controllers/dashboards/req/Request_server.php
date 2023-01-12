@@ -33,17 +33,21 @@ class Request_server extends MY_Controller
 	public function index()
 	{
 		if (!$this->check_isreq_validated()) {
-
 			$this->data['current_url'] = $this->uri->uri_string();
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
-			
-            $this->data['row_title_head'] = "บันทึกการเข้าใช้งาน server";
-			$this->data['row_title'] = $this->ModelTitle->get_title();
-			$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
-			$this->data['row_node'] = $this->modelNode->get_node_req();
-			$this->data['row_req'] = $this->modelRequest->get_req();
-			$this->loadView(array('pages/dashboard/req/request-server'));
+			$json_data = $this->session->userdata('req_permission_set');
+			$object = json_decode($json_data, true);
+			if ($object['req_menu']) {
+				$this->data['row_title_head'] = "บันทึกการเข้าใช้งาน server";
+				$this->data['row_title'] = $this->ModelTitle->get_title();
+				$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
+				$this->data['row_node'] = $this->modelNode->get_node_req();
+				$this->data['row_req'] = $this->modelRequest->get_req();
+				$this->loadView(array('pages/dashboard/req/request-server'));
+			} else {
+				header("Location: " . base_url('dashboard') . "");
+			}
 		}
 	}
 	public function get_req_id()

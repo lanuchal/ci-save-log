@@ -27,7 +27,6 @@ class Dashboard extends MY_Controller
 		} else {
 
 			$this->data['row_title_head'] = "ระบบบันทึกเข้าใช้งาน server";
-			// $this->loadView(array('pages/dashboard/dashboard'));
 			$this->loadView(array('pages/dashboard/mantianane/error404'));
 			$json_data = $this->session->userdata('req_permission_set');
 			$data = json_decode($json_data);

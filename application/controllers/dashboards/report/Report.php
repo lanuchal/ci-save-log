@@ -31,12 +31,15 @@ class Report extends MY_Controller
 
 
 
+		header("Location: " . base_url('dashboard') . "");
+		exit();
 		if (!$this->check_isreq_validated()) {
 
 			$this->data['current_url'] = $this->uri->uri_string();
 
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
+
 			$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
 			$this->data['row_user'] = $this->modelMaUser->get_user();
 			$this->data['row_permission'] = $this->modelPermission->get_permission();

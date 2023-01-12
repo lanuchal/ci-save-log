@@ -38,7 +38,10 @@ class Model_auth extends CI_Model
             );
             $this->session->sess_expiration = 86400;
             $this->session->set_userdata($data);
-            return 1;
+
+            return array(
+                'req_permission_set'  => $row['permission_set'],
+            );;
         } else {
             $data = array(
                 'req_validated' => false

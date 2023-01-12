@@ -11,6 +11,15 @@ class Model_ma_permission extends CI_Model
     }
 
 
+    public function get_ma_permission()
+    {
+        $this->db->select('permission_id,permission_name,permission_detail,permission_set,permission_status,create_time,update_time');
+        $this->db->from('serv_permission');
+        $this->db->where('deleted', '0');
+        $this->db->where('permission_status', '1');
+        $result = $this->db->get();
+        return $result->result_array();
+    }
 
     public function change_permission_set($id, $data)
     {
@@ -22,7 +31,6 @@ class Model_ma_permission extends CI_Model
 
         $this->db->where('permission_id', $id);
         $this->db->update('serv_permission', $data);
-
         $this->db->select('permission_set,permission_id');
         $this->db->from('serv_permission');
         $this->db->where('permission_id', $id);

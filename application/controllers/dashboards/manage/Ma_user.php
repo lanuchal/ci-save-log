@@ -33,12 +33,21 @@ class Ma_user extends MY_Controller
 			$this->data['current_url'] = $this->uri->uri_string();
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
-            $this->data['row_title_head'] = "กำหนดผู้ใช้งาน";
-			$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
-			$this->data['row_user'] = $this->modelMaUser->get_user();
-			$this->data['row_permission'] = $this->modelPermission->get_permission_status_on();
 
-			$this->loadView(array('pages/dashboard/manage/ma-user'));
+			$json_data = $this->session->userdata('req_permission_set');
+			$object = json_decode($json_data, true);
+			if ($object['user_menu']) {
+				$this->data['row_title_head'] = "กำหนดผู้ใช้งาน";
+				$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
+				$this->data['row_user'] = $this->modelMaUser->get_user();
+				$this->data['row_permission'] = $this->modelPermission->get_permission_status_on();
+	
+				$this->loadView(array('pages/dashboard/manage/ma-user'));
+			} else {
+				header("Location: " . base_url('dashboard') . "");
+			}
+
+
 		}
 	}
 	public function get_user_permission()

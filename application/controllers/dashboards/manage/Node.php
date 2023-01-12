@@ -21,11 +21,22 @@ class Node extends MY_Controller
 
 			$this->loadViewPageAuth(array('pages/auth/auth-login'));
 		} else {
-            $this->data['row_title_head'] = "จัดการ server";
-			$this->data['row_node'] = $this->modelNode->get_node();
-
-			$this->loadView(array('pages/dashboard/manage/node'));
+			$json_data = $this->session->userdata('req_permission_set');
+			$object = json_decode($json_data, true);
+			if ($object['server_menu']) {
+				$this->data['row_title_head'] = "จัดการ server";
+				$this->data['row_node'] = $this->modelNode->get_node();
+				$this->loadView(array('pages/dashboard/manage/node'));
+			} else {
+				header("Location: " . base_url('dashboard') . "");
+			}
 		}
+	}
+
+	public function get_node()
+	{
+		$result = $this->modelNode->get_node();
+		echo json_encode($result);
 	}
 
 	public function get_node_id()

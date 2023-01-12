@@ -139,7 +139,7 @@
                                     <tr id='td_permission<?php echo $row['permission_id'] ?>'>
                                         <td><?php echo $key + 1; ?></td>
                                         <td id='permission_names<?php echo $row['permission_id'] ?>'><?php echo $row['permission_name']; ?></td>
-                                        <td id='permission_details<?php echo $row['permission_id'] ?>'><?php echo $row['permission_detail']; ?></td>
+                                        <td id='permission_details<?php echo $row['permission_id'] ?>' class="text-break"><?php echo $row['permission_detail']; ?></td>
                                         <td id='permission_statuss<?php echo $row['permission_id'] ?>'>
                                             <span class="badge me-1 <?php echo $label_color; ?>">
                                                 <?php echo $status_permission; ?>
@@ -343,7 +343,7 @@
                 var new_row = ` <tr id='td_permission${response.id}'>
                                         <td>${response.lenght_row}</td>
                                         <td id='permission_names${response.id}'>${response.permission_name}</td>
-                                        <td id='permission_details${response.id}'>${response.permission_detail}</td>
+                                        <td id='permission_details${response.id}' class="text-break">${response.permission_detail}</td>
                                         <td id='permission_statuss${response.id}'>
                                             <span class="badge me-1 ${label_color}">
                                             ${status_permission}

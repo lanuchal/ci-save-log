@@ -43,30 +43,13 @@ class Auth extends MY_Controller
         $username = strval($this->security->xss_clean($this->input->post('username')));
         $password = strval($this->security->xss_clean($this->input->post('password')));
         $last_path = strval($this->security->xss_clean($this->input->post('last_path')));
-
         $num_ot  = sizeof($this->modelTableId->get_table_id('tb_nuser', 'NUM_OT', $username));
-
 
         $result = (!$num_ot) ?
             array("status" => '0', "num_ot" => $num_ot) :
-            // array("status" => '1', "last_path" => $last_path, "data" => strval($this->modelAuth->validate($username, $password)));
             array("status" => '1', "username" => $username, "password" => $password, "last_path" => $last_path, "data" => json_encode($this->modelAuth->validate($username, $password)));
+
         echo json_encode($result);
-
-
-
-        // $username = $this->security->xss_clean($this->input->post('username'));
-        // $password = $this->security->xss_clean($this->input->post('password'));
-        // $last_path = $this->security->xss_clean($this->input->post('last_path'));
-
-        // $result = $this->modelAuth->validate($username, $password);
-
-        // if ($result) {
-        //     header("Location: " . base_url($last_path) . "");
-        // } else {
-        //     $this->data['current_url'] = $last_path;
-        //     $this->loadViewPageAuth(array('pages/auth/auth-login'));
-        // }
     }
 
     public function logout()

@@ -8,7 +8,7 @@ class Model_node extends CI_Model
     {
         parent::__construct();
     }
-    
+
     public function get_node()
     {
         $this->db->select('node_id,node_ip,node_name,node_detail,node_status,create_time,update_time');
