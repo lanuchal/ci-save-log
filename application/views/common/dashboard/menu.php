@@ -34,7 +34,6 @@ $object = json_decode($json_data, true);
             </a>
         </li> -->
 
-        <!-- kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk -->
 
         <?php if ($object['req_menu']) { ?>
             <li class="menu-header small text-uppercase">
@@ -134,7 +133,7 @@ $object = json_decode($json_data, true);
         <?php  } ?>
         <li class="menu-item <?php if ($nav_uri == "cards_basic")
                                     echo "active"; ?>">
-            <a href="<?php echo base_url('logout'); ?>" class="menu-link" data-bs-toggle="modal" data-bs-target="#modalToggle_logout">
+            <a href="#" onclick="logout_menu()" class="menu-link" data-bs-toggle="modal" data-bs-target="#modalToggle_logout">
                 <i class="menu-icon tf-icons bx bx-log-out"></i>
                 <div data-i18n="Basic">ออกจากระบบ</div>
             </a>

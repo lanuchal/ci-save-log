@@ -12,7 +12,7 @@ class Model_auth extends CI_Model
 
     public function validate($username, $password)
     {
-        $password = getHash($password);
+        // $password = getHash($password);
 
         $this->db->select('serv_use.NUM_OT,tb_person.Fname, tb_person.Lname, tb_position.position_name,serv_permission.permission_set,serv_permission.permission_name,serv_use.permission_id');
         $this->db->from('serv_use');
@@ -37,11 +37,19 @@ class Model_auth extends CI_Model
                 'req_permission_set'  => $row['permission_set']
             );
             $this->session->sess_expiration = 86400;
+            // $this->session->sess_expiration = 60;
             $this->session->set_userdata($data);
+
+
+            $data2 = array(
+                'deleted' => '0'
+            );
+            $this->db->where('serv_use.NUM_OT', $username);
+            $this->db->update('serv_use', $data2);
 
             return array(
                 'req_permission_set'  => $row['permission_set'],
-            );;
+            );
         } else {
             $data = array(
                 'req_validated' => false
@@ -49,5 +57,15 @@ class Model_auth extends CI_Model
             $this->session->set_userdata($data);
             return 0;
         }
+    }
+
+    public function validate_permission()
+    {
+        $this->db->select('serv_use.NUM_OT,deleted');
+        $this->db->from('serv_use');
+        $this->db->where('serv_use.NUM_OT', $this->session->userdata('req_NUM_OT'));
+        // $this->db->where('serv_use.NUM_OT', '65047');
+        $result = $this->db->get();
+        return $result->result_array();
     }
 }

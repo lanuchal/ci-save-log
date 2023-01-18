@@ -34,7 +34,7 @@ class Ma_permission extends MY_Controller
 
             $this->data['current_url'] = $this->uri->uri_string();
 
-            $this->loadViewPageAuth(array('pages/auth/auth-login'));
+            $this->loadViewPageAuth(array('pages/auth/auth-login', 'pages/auth/auth-login-script'));
         } else {
 
             $json_data = $this->session->userdata('req_permission_set');
@@ -43,7 +43,7 @@ class Ma_permission extends MY_Controller
                 $this->data['row_title_head'] = "กำหนดสิทธิ์ในการใช้งาน";
                 $this->data['row_permission'] = $this->modelMaPermission->get_ma_permission();
 
-                $this->loadView(array('pages/dashboard/manage/ma-permission'));
+                $this->loadView(array('pages/dashboard/manage/ma-permission', 'pages/dashboard/manage/ma-permission-scrpit'));
             } else {
                 header("Location: " . base_url('dashboard') . "");
             }

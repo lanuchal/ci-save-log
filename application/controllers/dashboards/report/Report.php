@@ -37,14 +37,14 @@ class Report extends MY_Controller
 
 			$this->data['current_url'] = $this->uri->uri_string();
 
-			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+			$this->loadViewPageAuth(array('pages/auth/auth-login', 'pages/auth/auth-login-script'));
 		} else {
 
 			$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
 			$this->data['row_user'] = $this->modelMaUser->get_user();
 			$this->data['row_permission'] = $this->modelPermission->get_permission();
 
-			$this->loadView(array('pages/dashboard/report/report'));
+			$this->loadView(array('pages/dashboard/report/report','pages/dashboard/report/report-script'));
 		}
 	}
 	public function get_user_permission()

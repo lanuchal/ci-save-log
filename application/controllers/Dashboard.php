@@ -23,7 +23,7 @@ class Dashboard extends MY_Controller
 	{
 		if (!$this->check_isreq_validated()) {
 			$this->data['current_url'] = $this->uri->uri_string();
-			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+			$this->loadViewPageAuth(array('pages/auth/auth-login', 'pages/auth/auth-login-script'));
 		} else {
 
 			$this->data['row_title_head'] = "ระบบบันทึกเข้าใช้งาน server";

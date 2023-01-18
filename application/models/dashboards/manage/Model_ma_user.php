@@ -18,7 +18,7 @@ class Model_ma_user extends CI_Model
         $this->db->join('serv_use', 'serv_use.NUM_OT = tb_nuser.NUM_OT');
         $this->db->join('serv_permission', 'serv_use.permission_id = serv_permission.permission_id');
         $this->db->order_by("serv_use.create_time", "asc");
-        $this->db->where('serv_use.deleted', '0');
+        $this->db->where('serv_use.deleted !=', '1');
         $result = $this->db->get();
 
         return $result->result_array();
@@ -61,7 +61,8 @@ class Model_ma_user extends CI_Model
         $data = array(
             'permission_id' => $permission_id,
             'update_by' => $this->session->userdata('req_NUM_OT'),
-            'update_time' => date("Y-m-d h:i:s")
+            'update_time' => date("Y-m-d h:i:s"),
+            'deleted' => '2'
         );
 
         $this->db->where('NUM_OT', $id);

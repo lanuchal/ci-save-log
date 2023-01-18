@@ -2,8 +2,8 @@
 
 $name_ot = $this->session->userdata('req_NUM_OT');
 
-$pwd = "D:/xampp/htdocs"; // for localhost
-// $pwd = "/var/www/html"; //for server
+// $pwd = "D:/xampp/htdocs"; // for localhost
+$pwd = "/var/www/html"; //for server
 $uri = '/employee/images/person/' . $name_ot . '.png';
 $uri_img = (!file_exists($pwd . $uri)) ? "/cmex_system/common/assets/images/person_img.png" : $uri;
 ?>
@@ -12,7 +12,7 @@ $uri_img = (!file_exists($pwd . $uri)) ? "/cmex_system/common/assets/images/pers
     <!-- Navbar -->
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
         <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)" id="close_nav_menu">
                 <i class="bx bx-menu bx-sm"></i>
             </a>
         </div>
@@ -25,7 +25,7 @@ $uri_img = (!file_exists($pwd . $uri)) ? "/cmex_system/common/assets/images/pers
 
             <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
-               
+
                 <b><?php echo $this->session->userdata('req_Fname') . " " . $this->session->userdata('req_Lname') . " / " . $this->session->userdata('req_position_name'); ?> &nbsp; </b>
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -63,7 +63,7 @@ $uri_img = (!file_exists($pwd . $uri)) ? "/cmex_system/common/assets/images/pers
                             <div class="dropdown-divider"></div>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="<?php echo base_url('logout'); ?>" class="menu-link" data-bs-toggle="modal" data-bs-target="#modalToggle_logout">
+                            <a class="dropdown-item" href="#" class="menu-link" data-bs-toggle="modal" data-bs-target="#modalToggle_logout">
                                 <i class="bx bx-power-off me-2"></i>
                                 <span class="align-middle">ออกจากระบบ</span>
                             </a>

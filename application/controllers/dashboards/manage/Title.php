@@ -32,7 +32,7 @@ class Title extends MY_Controller
 
 			$this->data['current_url'] = $this->uri->uri_string();
 
-			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+			$this->loadViewPageAuth(array('pages/auth/auth-login', 'pages/auth/auth-login-script'));
 		} else {
 
 			$json_data = $this->session->userdata('req_permission_set');
@@ -42,7 +42,7 @@ class Title extends MY_Controller
 				$this->data['row_title_head'] = "จัดการรายการ";
 				$this->data['row_title'] = $this->ModelTitle->get_title();
 
-				$this->loadView(array('pages/dashboard/manage/title'));
+				$this->loadView(array('pages/dashboard/manage/title','pages/dashboard/manage/title-script'));
 			} else {
 				header("Location: " . base_url('dashboard') . "");
 			}

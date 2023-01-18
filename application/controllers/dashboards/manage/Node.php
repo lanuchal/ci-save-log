@@ -19,14 +19,14 @@ class Node extends MY_Controller
 
 			$this->data['current_url'] = $this->uri->uri_string();
 
-			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+			$this->loadViewPageAuth(array('pages/auth/auth-login', 'pages/auth/auth-login-script'));
 		} else {
 			$json_data = $this->session->userdata('req_permission_set');
 			$object = json_decode($json_data, true);
 			if ($object['server_menu']) {
 				$this->data['row_title_head'] = "จัดการ server";
 				$this->data['row_node'] = $this->modelNode->get_node();
-				$this->loadView(array('pages/dashboard/manage/node'));
+				$this->loadView(array('pages/dashboard/manage/node','pages/dashboard/manage/node-script'));
 			} else {
 				header("Location: " . base_url('dashboard') . "");
 			}

@@ -25,13 +25,16 @@ class Auth extends MY_Controller
         date_default_timezone_set('Asia/Bangkok');
         $this->load->model('auth/Model_auth', 'modelAuth');
         $this->load->model('Model_table_id', 'modelTableId');
+        $this->load->helper('../../../website_cmex_helper/php/hash_helper');
     }
+
 
     public function index()
     {
+
         if (!$this->check_isreq_validated()) {
             $this->data['current_url'] = $this->uri->uri_string();
-            $this->loadViewPageAuth(array('pages/auth/auth-login'));
+            $this->loadViewPageAuth(array('pages/auth/auth-login', 'pages/auth/auth-login-script'));
         } else {
             header("Location: " . base_url('dashboard') . "");
         }
@@ -45,9 +48,13 @@ class Auth extends MY_Controller
         $last_path = strval($this->security->xss_clean($this->input->post('last_path')));
         $num_ot  = sizeof($this->modelTableId->get_table_id('tb_nuser', 'NUM_OT', $username));
 
-        $result = (!$num_ot) ?
-            array("status" => '0', "num_ot" => $num_ot) :
-            array("status" => '1', "username" => $username, "password" => $password, "last_path" => $last_path, "data" => json_encode($this->modelAuth->validate($username, $password)));
+        $password = getHash($password);
+
+        $Upass  = sizeof($this->modelTableId->get_table_id('tb_nuser', 'Upass', $password));
+
+        $result = (!$num_ot || !$Upass) ?
+            array("status" => '0', "num_ot" => $num_ot, "Upass" => $Upass) :
+            array("status" => '1', "username" => $username, "password" => $Upass, "last_path" => $last_path, "data" => json_encode($this->modelAuth->validate($username, $password)));
 
         echo json_encode($result);
     }

@@ -6,6 +6,8 @@ class MY_Controller extends CI_Controller
     function __construct()
     {
         parent::__construct();
+
+        $this->load->model('auth/Model_auth', 'modelAuth');
         $this->data['nav_uri'] = $this->uri->uri_string();
 
         $this->load->library('session');
@@ -41,6 +43,16 @@ class MY_Controller extends CI_Controller
         $chk_login = $this->session->userdata('req_validated');
 
         if ($chk_login) {
+            $data  = $this->modelAuth->validate_permission();
+            if ($data[0]['deleted'] == '2') {
+                $this->session->sess_destroy();
+                $message = "เนื่องจากสิทธ์ของคุณมีการเปลี่ยนแปลง กรุณาเข้าสู่ระบบอีกครับค่ะ";
+                echo "<script type='text/javascript'>alert('$message');</script>";
+
+                return 0;
+            } else {
+                return 1;
+            }
             return 1;
         } else {
             return 0;

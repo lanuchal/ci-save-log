@@ -4,15 +4,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 // on web
-$host = "172.17.8.222";
-$user = "miscme";
-$pass = "A5pHv553NNN3ldn8161s7PoQLHzYRnBG";
-$db_name = "dbewarehouse";
 
 // localhost
-$host = "localhost";
-$user = "root";
-$pass = "";
+// $host = "localhost";
+// $user = "root";
+// $pass = "";
+// $db_name = "db_serv";
+
+// localhost
+$host = "34.142.245.97";
+$user = "dev-db";
+$pass = "123456";
 $db_name = "db_serv";
 
 

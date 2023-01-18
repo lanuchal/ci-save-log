@@ -31,7 +31,7 @@ class Ma_user extends MY_Controller
 	{
 		if (!$this->check_isreq_validated()) {
 			$this->data['current_url'] = $this->uri->uri_string();
-			$this->loadViewPageAuth(array('pages/auth/auth-login'));
+			$this->loadViewPageAuth(array('pages/auth/auth-login', 'pages/auth/auth-login-script'));
 		} else {
 
 			$json_data = $this->session->userdata('req_permission_set');
@@ -41,19 +41,17 @@ class Ma_user extends MY_Controller
 				$this->data['row_ma_user'] = $this->modelMaUser->get_ma_user();
 				$this->data['row_user'] = $this->modelMaUser->get_user();
 				$this->data['row_permission'] = $this->modelPermission->get_permission_status_on();
-	
-				$this->loadView(array('pages/dashboard/manage/ma-user'));
+
+				$this->loadView(array('pages/dashboard/manage/ma-user', 'pages/dashboard/manage/ma-user-script'));
 			} else {
 				header("Location: " . base_url('dashboard') . "");
 			}
-
-
 		}
 	}
 	public function get_user_permission()
 	{
 		$id = $this->security->xss_clean($this->input->post('id'));
-		$result = $this->modelMaUser->get_user_permission($id);
+		$result = $this->modelMaUser->get_user_permission(strval($id));
 		echo json_encode($result);
 	}
 	public function get_ma_user_id()

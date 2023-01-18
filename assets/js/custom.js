@@ -112,7 +112,7 @@ $(document).ready(function () {
     .on("select", function (e, dt, type, indexes) {
       var rowData = table.rows(indexes).data().toArray();
       data_select.push(rowData[0][1]);
-      console.log(data_select);
+      //console.log(data_select);
     })
     .on("deselect", function (e, dt, type, indexes) {
       var rowData = table.rows(indexes).data().toArray();
@@ -120,9 +120,14 @@ $(document).ready(function () {
       if (index > -1) {
         data_select.splice(index, 1);
       }
-      console.log(data_select);
+      //console.log(data_select);
     });
 
   table.buttons().container().appendTo("#example_wrapper .col-md-6:eq(0)");
 });
+
+const logout_menu = () => {
+  //console.log("55555555555555555555");
+  document.getElementById("close_nav_menu").click();
+}
 
